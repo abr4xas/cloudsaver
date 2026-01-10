@@ -1,0 +1,219 @@
+/*
+  2026 Design System Animations
+  Optimized for performance using transform and opacity
+*/
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@keyframes mesh-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.6;
+    }
+}
+
+@keyframes mesh-rotate {
+    0% {
+        transform: rotate(0deg) translate(0, 0);
+    }
+    33% {
+        transform: rotate(10deg) translate(30px, -20px);
+    }
+    66% {
+        transform: rotate(-5deg) translate(-20px, 30px);
+    }
+    100% {
+        transform: rotate(0deg) translate(0, 0);
+    }
+}
+
+@keyframes float-slow {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes float-medium {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes glow-strong {
+    0%,
+    100% {
+        box-shadow: 0 0 20px -5px var(--primary);
+    }
+    50% {
+        box-shadow: 0 0 40px 0px var(--primary);
+    }
+}
+
+@keyframes text-shimmer {
+    0% {
+        background-position: -200% center;
+    }
+    100% {
+        background-position: 200% center;
+    }
+}
+
+@keyframes gradient-x {
+    0%,
+    100% {
+        background-size: 200% 200%;
+        background-position: left center;
+    }
+    50% {
+        background-size: 200% 200%;
+        background-position: right center;
+    }
+}
+
+/* Complex Mesh Gradient Background */
+.mesh-gradient {
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    z-index: 0;
+    background: radial-gradient(
+            circle at 50% 50%,
+            rgba(var(--primary), 0.15) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(var(--secondary), 0.15) 0%,
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(var(--accent), 0.1) 0%,
+            transparent 40%
+        );
+    filter: blur(80px);
+    animation: mesh-rotate 30s ease-in-out infinite alternate;
+    pointer-events: none;
+    will-change: transform;
+}
+
+.mesh-gradient::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+            at 40% 40%,
+            oklch(0.65 0.25 280 / 0.1) 0px,
+            transparent 50%
+        ),
+        radial-gradient(
+            at 90% 10%,
+            oklch(0.65 0.2 250 / 0.1) 0px,
+            transparent 50%
+        ),
+        radial-gradient(
+            at 10% 90%,
+            oklch(0.75 0.18 150 / 0.05) 0px,
+            transparent 50%
+        );
+    mix-blend-mode: screen;
+    animation: mesh-pulse 15s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+/* Premium Glass Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 10px 40px rgba(100, 100, 255, 0.1);
+}
+
+/* Text Gradients */
+.text-gradient {
+    background: linear-gradient(to right, oklch(0.98 0 0), oklch(0.8 0.1 280));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.text-gradient-primary {
+    background: linear-gradient(to right, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Animation Utility Classes */
+.animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+    animation: float-medium 4s ease-in-out infinite;
+}
+
+.animate-glow {
+    animation: glow-strong 3s ease-in-out infinite;
+}
+
+.animate-gradient-x {
+    animation: gradient-x 3s ease infinite;
+}
+
+/* Shake animation for form validation */
+@keyframes shake {
+    10%,
+    90% {
+        transform: translate3d(-1px, 0, 0);
+    }
+    20%,
+    80% {
+        transform: translate3d(2px, 0, 0);
+    }
+    30%,
+    50%,
+    70% {
+        transform: translate3d(-4px, 0, 0);
+    }
+    40%,
+    60% {
+        transform: translate3d(4px, 0, 0);
+    }
+}
+
+.animate-shake {
+    animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}

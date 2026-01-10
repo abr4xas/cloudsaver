@@ -1,0 +1,306 @@
+{
+  "sizes": [
+    {
+      "slug": "s-1vcpu-512mb-10gb",
+      "memory": 512,
+      "vcpus": 1,
+      "disk": 10,
+      "transfer": 0.5,
+      "price_monthly": 4.0,
+      "price_hourly": 0.00595,
+      "available": true
+    },
+    {
+      "slug": "s-1vcpu-1gb",
+      "memory": 1024,
+      "vcpus": 1,
+      "disk": 25,
+      "transfer": 1.0,
+      "price_monthly": 5.0,
+      "price_hourly": 0.00744,
+      "available": true
+    },
+    {
+      "slug": "s-1vcpu-2gb",
+      "memory": 2048,
+      "vcpus": 1,
+      "disk": 50,
+      "transfer": 2.0,
+      "price_monthly": 12.0,
+      "price_hourly": 0.01786,
+      "available": true
+    },
+    {
+      "slug": "s-2vcpu-2gb",
+      "memory": 2048,
+      "vcpus": 2,
+      "disk": 50,
+      "transfer": 2.0,
+      "price_monthly": 18.0,
+      "price_hourly": 0.02679,
+      "available": true
+    },
+    {
+      "slug": "s-2vcpu-4gb",
+      "memory": 4096,
+      "vcpus": 2,
+      "disk": 80,
+      "transfer": 3.0,
+      "price_monthly": 24.0,
+      "price_hourly": 0.03571,
+      "available": true
+    },
+    {
+      "slug": "s-4vcpu-8gb",
+      "memory": 8192,
+      "vcpus": 4,
+      "disk": 160,
+      "transfer": 4.0,
+      "price_monthly": 48.0,
+      "price_hourly": 0.07143,
+      "available": true
+    },
+    {
+      "slug": "s-8vcpu-16gb",
+      "memory": 16384,
+      "vcpus": 8,
+      "disk": 320,
+      "transfer": 5.0,
+      "price_monthly": 96.0,
+      "price_hourly": 0.14286,
+      "available": true
+    },
+    {
+      "slug": "s-16vcpu-32gb",
+      "memory": 32768,
+      "vcpus": 16,
+      "disk": 640,
+      "transfer": 6.0,
+      "price_monthly": 192.0,
+      "price_hourly": 0.28571,
+      "available": true
+    },
+    {
+      "slug": "s-1vcpu-3gb",
+      "memory": 3072,
+      "vcpus": 1,
+      "disk": 60,
+      "transfer": 3.0,
+      "price_monthly": 15.0,
+      "price_hourly": 0.02232,
+      "available": true
+    },
+    {
+      "slug": "s-3vcpu-1gb",
+      "memory": 1024,
+      "vcpus": 3,
+      "disk": 60,
+      "transfer": 3.0,
+      "price_monthly": 15.0,
+      "price_hourly": 0.02232,
+      "available": true
+    },
+    {
+      "slug": "s-6vcpu-16gb",
+      "memory": 16384,
+      "vcpus": 6,
+      "disk": 320,
+      "transfer": 6.0,
+      "price_monthly": 96.0,
+      "price_hourly": 0.14286,
+      "available": true
+    },
+    {
+      "slug": "s-8vcpu-32gb",
+      "memory": 32768,
+      "vcpus": 8,
+      "disk": 640,
+      "transfer": 7.0,
+      "price_monthly": 192.0,
+      "price_hourly": 0.28571,
+      "available": true
+    },
+    {
+      "slug": "s-12vcpu-48gb",
+      "memory": 49152,
+      "vcpus": 12,
+      "disk": 960,
+      "transfer": 8.0,
+      "price_monthly": 288.0,
+      "price_hourly": 0.42857,
+      "available": true
+    },
+    {
+      "slug": "s-16vcpu-64gb",
+      "memory": 65536,
+      "vcpus": 16,
+      "disk": 1280,
+      "transfer": 9.0,
+      "price_monthly": 384.0,
+      "price_hourly": 0.57143,
+      "available": true
+    },
+    {
+      "slug": "s-20vcpu-96gb",
+      "memory": 98304,
+      "vcpus": 20,
+      "disk": 1920,
+      "transfer": 10.0,
+      "price_monthly": 576.0,
+      "price_hourly": 0.85714,
+      "available": true
+    },
+    {
+      "slug": "s-24vcpu-128gb",
+      "memory": 131072,
+      "vcpus": 24,
+      "disk": 2560,
+      "transfer": 11.0,
+      "price_monthly": 768.0,
+      "price_hourly": 1.14286,
+      "available": true
+    },
+    {
+      "slug": "s-32vcpu-192gb",
+      "memory": 196608,
+      "vcpus": 32,
+      "disk": 3840,
+      "transfer": 12.0,
+      "price_monthly": 1152.0,
+      "price_hourly": 1.71429,
+      "available": true
+    },
+    {
+      "slug": "c-2",
+      "memory": 4096,
+      "vcpus": 2,
+      "disk": 25,
+      "transfer": 3.0,
+      "price_monthly": 24.0,
+      "price_hourly": 0.03571,
+      "available": true
+    },
+    {
+      "slug": "c-4",
+      "memory": 8192,
+      "vcpus": 4,
+      "disk": 50,
+      "transfer": 4.0,
+      "price_monthly": 48.0,
+      "price_hourly": 0.07143,
+      "available": true
+    },
+    {
+      "slug": "c-8",
+      "memory": 16384,
+      "vcpus": 8,
+      "disk": 100,
+      "transfer": 5.0,
+      "price_monthly": 96.0,
+      "price_hourly": 0.14286,
+      "available": true
+    },
+    {
+      "slug": "c-16",
+      "memory": 32768,
+      "vcpus": 16,
+      "disk": 200,
+      "transfer": 6.0,
+      "price_monthly": 192.0,
+      "price_hourly": 0.28571,
+      "available": true
+    },
+    {
+      "slug": "c-32",
+      "memory": 65536,
+      "vcpus": 32,
+      "disk": 400,
+      "transfer": 7.0,
+      "price_monthly": 384.0,
+      "price_hourly": 0.57143,
+      "available": true
+    },
+    {
+      "slug": "m-2vcpu-16gb",
+      "memory": 16384,
+      "vcpus": 2,
+      "disk": 60,
+      "transfer": 5.0,
+      "price_monthly": 90.0,
+      "price_hourly": 0.13393,
+      "available": true
+    },
+    {
+      "slug": "m-4vcpu-32gb",
+      "memory": 32768,
+      "vcpus": 4,
+      "disk": 90,
+      "transfer": 5.0,
+      "price_monthly": 180.0,
+      "price_hourly": 0.26786,
+      "available": true
+    },
+    {
+      "slug": "m-8vcpu-64gb",
+      "memory": 65536,
+      "vcpus": 8,
+      "disk": 200,
+      "transfer": 5.0,
+      "price_monthly": 360.0,
+      "price_hourly": 0.53571,
+      "available": true
+    },
+    {
+      "slug": "m-16vcpu-128gb",
+      "memory": 131072,
+      "vcpus": 16,
+      "disk": 340,
+      "transfer": 5.0,
+      "price_monthly": 720.0,
+      "price_hourly": 1.07143,
+      "available": true
+    },
+    {
+      "slug": "m-32vcpu-256gb",
+      "memory": 262144,
+      "vcpus": 32,
+      "disk": 500,
+      "transfer": 5.0,
+      "price_monthly": 1440.0,
+      "price_hourly": 2.14286,
+      "available": true
+    }
+  ],
+  "volumes": {
+    "per_gb_monthly": 0.10
+  },
+  "snapshots": {
+    "per_gb_monthly": 0.05
+  },
+  "backups": {
+    "percentage_of_droplet_cost": 20.0
+  },
+  "reserved_ips": {
+    "per_month": 2.16
+  },
+  "load_balancers": {
+    "http": 12.0,
+    "network": 15.0
+  },
+  "databases": {
+    "db-s-1vcpu-1gb": 15.0,
+    "db-s-1vcpu-2gb": 25.0,
+    "db-s-2vcpu-4gb": 60.0,
+    "db-s-4vcpu-8gb": 115.0,
+    "db-s-6vcpu-16gb": 175.0,
+    "db-s-8vcpu-32gb": 290.0,
+    "db-s-16vcpu-64gb": 580.0,
+    "db-s-32vcpu-128gb": 1160.0,
+    "db-m-2vcpu-16gb": 210.0,
+    "db-m-4vcpu-32gb": 420.0,
+    "db-m-8vcpu-64gb": 840.0,
+    "db-m-16vcpu-128gb": 1680.0,
+    "db-m-32vcpu-256gb": 3360.0
+  },
+  "last_updated": "2025-01-27"
+}

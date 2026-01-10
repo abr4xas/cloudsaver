@@ -1,0 +1,127 @@
+{
+    "monthlyCost": 931.15,
+    "potentialSavings": 218.95,
+    "savingsPercentage": 23.5,
+    "resourcesFound": 67,
+    "recommendations": [
+        {
+            "type": "droplet",
+            "subtype": "grouped_droplet",
+            "title": "Optimize 8 Droplets",
+            "description": "Various optimizations available (consolidate droplets, droplet downgrade, zombie droplet). See details for a full breakdown.",
+            "savings": 135.2,
+            "confidence": "High",
+            "impact": "High",
+            "resourceId": null,
+            "resourceName": null,
+            "currentPlan": null,
+            "suggestedPlan": null,
+            "data": {
+                "count": 8,
+                "recommendations": [
+                    {
+                        "subtype": "consolidate_droplets",
+                        "title": "Consolidate 3 droplets into one s-2vcpu-4gb",
+                        "resourceName": null,
+                        "savings": 9.6
+                    },
+                    {
+                        "subtype": "droplet_downgrade",
+                        "title": "Manual Migration: \"api-server-01\" to save $36/mo",
+                        "resourceName": "api-server-01",
+                        "savings": 36
+                    },
+                    {
+                        "subtype": "droplet_downgrade",
+                        "title": "Manual Migration: \"worker-node-02\" to save $10/mo",
+                        "resourceName": "worker-node-02",
+                        "savings": 9.6
+                    },
+                    {
+                        "subtype": "droplet_downgrade",
+                        "title": "Manual Migration: \"cache-server\" to save $8/mo",
+                        "resourceName": "cache-server",
+                        "savings": 8
+                    },
+                    {
+                        "subtype": "zombie_droplet",
+                        "title": "Zombie Droplet: \"staging-old-01\" ($14/mo)",
+                        "resourceName": "staging-old-01",
+                        "savings": 14.4
+                    },
+                    {
+                        "subtype": "zombie_droplet",
+                        "title": "Zombie Droplet: \"test-environment\" ($25/mo)",
+                        "resourceName": "test-environment",
+                        "savings": 25.2
+                    },
+                    {
+                        "subtype": "zombie_droplet",
+                        "title": "Zombie Droplet: \"ubuntu-backup-01\" ($24/mo)",
+                        "resourceName": "ubuntu-backup-01",
+                        "savings": 24
+                    },
+                    {
+                        "subtype": "zombie_droplet",
+                        "title": "Zombie Droplet: \"legacy-app-01\" ($8/mo)",
+                        "resourceName": "legacy-app-01",
+                        "savings": 8.4
+                    }
+                ]
+            }
+        },
+        {
+            "type": "snapshot",
+            "subtype": "old_snapshot",
+            "title": "Delete 29 old snapshots ($83.75/mo)",
+            "description": "You have 29 snapshots older than 6 months: db-backup-2023-06, web-snapshot-2023-07, staging-backup-2023-08 and 26 more. Consider deleting them if no longer needed.",
+            "savings": 83.75,
+            "confidence": "Medium",
+            "impact": "Low",
+            "resourceId": null,
+            "resourceName": null,
+            "currentPlan": null,
+            "suggestedPlan": null,
+            "warnings": [
+                "⚠️ Ensure you have recent backups before deleting old snapshots",
+                "🔍 Verify these snapshots are not used for disaster recovery"
+            ],
+            "data": {
+                "snapshotCount": 29,
+                "totalSizeGB": 1675,
+                "ageMonths": 6,
+                "snapshotIds": [
+                    "snap-001",
+                    "snap-002",
+                    "snap-003",
+                    "snap-004",
+                    "snap-005",
+                    "snap-006",
+                    "snap-007",
+                    "snap-008",
+                    "snap-009",
+                    "snap-010",
+                    "snap-011",
+                    "snap-012",
+                    "snap-013",
+                    "snap-014",
+                    "snap-015",
+                    "snap-016",
+                    "snap-017",
+                    "snap-018",
+                    "snap-019",
+                    "snap-020",
+                    "snap-021",
+                    "snap-022",
+                    "snap-023",
+                    "snap-024",
+                    "snap-025",
+                    "snap-026",
+                    "snap-027",
+                    "snap-028",
+                    "snap-029"
+                ]
+            }
+        }
+    ]
+}

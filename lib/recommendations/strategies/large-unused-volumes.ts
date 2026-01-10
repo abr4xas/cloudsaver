@@ -30,7 +30,7 @@ export class LargeUnusedVolumesAnalyzer implements Analyzer {
 	private readonly LARGE_VOLUME_THRESHOLD_GB = 100; // Consider volumes > 100GB as "large"
 
 	constructor() {
-		this.pricingService = new PricingService();
+		this.pricingService = PricingService.getInstance();
 	}
 
 	async analyze(data: ResourceData): Promise<Recommendation[]> {

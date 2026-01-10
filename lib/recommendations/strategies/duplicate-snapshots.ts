@@ -27,7 +27,7 @@ export class DuplicateSnapshotsAnalyzer implements Analyzer {
 	private readonly DUPLICATE_WINDOW_DAYS = 7; // Consider snapshots within 7 days as potential duplicates
 
 	constructor() {
-		this.pricingService = new PricingService();
+		this.pricingService = PricingService.getInstance();
 	}
 
 	async analyze(data: ResourceData): Promise<Recommendation[]> {

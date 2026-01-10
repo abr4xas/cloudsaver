@@ -24,7 +24,7 @@ export class IdleLoadBalancersAnalyzer implements Analyzer {
 	private pricingService: PricingService;
 
 	constructor() {
-		this.pricingService = new PricingService();
+		this.pricingService = PricingService.getInstance();
 	}
 
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
@@ -43,7 +43,7 @@ export class IdleLoadBalancersAnalyzer implements Analyzer {
 			// Case 1: Empty load balancer (no droplets attached)
 			if (dropletIds.length === 0) {
 				recommendations.push({
-					type: 'load_balancer',
+					type: 'loadbalancer',
 					subtype: 'idle_load_balancer',
 					title: 'Empty Load Balancer',
 					description: `Load balancer "${loadBalancer.name}" has no droplets attached. You're paying $${monthlyCost.toFixed(2)}/month for an unused resource.`,
@@ -56,7 +56,7 @@ export class IdleLoadBalancersAnalyzer implements Analyzer {
 						'Make sure this load balancer is not needed before deleting it.',
 						'Check if there are any DNS records pointing to this load balancer.',
 					],
-					remediation: `# Delete the load balancer\ncurl -X DELETE https://api.digitalocean.com/v2/load_balancers/${loadBalancer.id} \\\n  -H "Authorization: Bearer YOUR_TOKEN"`,
+					remediationCommand: `# Delete the load balancer\ncurl -X DELETE https://api.digitalocean.com/v2/load_balancers/${loadBalancer.id} \\\n  -H "Authorization: Bearer YOUR_TOKEN"`,
 					data: {
 						type: lbType,
 						droplet_count: 0,
@@ -66,7 +66,7 @@ export class IdleLoadBalancersAnalyzer implements Analyzer {
 			// Case 2: Load balancer with only 1 droplet (might not need LB)
 			else if (dropletIds.length === 1) {
 				recommendations.push({
-					type: 'load_balancer',
+					type: 'loadbalancer',
 					subtype: 'underutilized_load_balancer',
 					title: 'Underutilized Load Balancer',
 					description: `Load balancer "${loadBalancer.name}" only has 1 droplet attached. A load balancer is typically used for high availability with multiple droplets. Consider if this LB is necessary.`,

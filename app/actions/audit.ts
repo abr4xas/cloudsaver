@@ -16,18 +16,7 @@ import { DigitalOceanService } from '@/lib/services/digitalocean/digitalocean-se
 import { PricingService } from '@/lib/services/pricing/pricing-service';
 import { RecommendationEngine as MainEngine } from '@/lib/services/analysis/recommendation-engine';
 import { logError } from "@/lib/error-handler";
-// Import analyzers directly
-import { ZombieDropletsAnalyzer } from '@/lib/recommendations/strategies/zombie-droplets';
-import { ZombieVolumesAnalyzer } from '@/lib/recommendations/strategies/zombie-volumes';
-import { OldSnapshotsAnalyzer } from '@/lib/recommendations/strategies/old-snapshots';
-import { RedundantBackupsAnalyzer } from '@/lib/recommendations/strategies/redundant-backups';
-import { DropletDowngradeAnalyzer } from '@/lib/recommendations/strategies/droplet-downgrade';
-import { DatabaseOptimizationAnalyzer } from '@/lib/recommendations/strategies/database-optimization';
-import { ConsolidateDropletsAnalyzer } from '@/lib/recommendations/strategies/consolidate-droplets';
-import { ChangeRegionAnalyzer } from '@/lib/recommendations/strategies/change-region';
-import { IdleLoadBalancersAnalyzer } from '@/lib/recommendations/strategies/idle-load-balancers';
-import { DuplicateSnapshotsAnalyzer } from '@/lib/recommendations/strategies/duplicate-snapshots';
-import { LargeUnusedVolumesAnalyzer } from '@/lib/recommendations/strategies/large-unused-volumes';
+import { getAllAnalyzers } from '@/lib/recommendations/analyzer-registry';
 
 export interface AuditResult {
 	monthlyCost: number;
@@ -70,25 +59,17 @@ export async function analyzeAccount(token: string): Promise<AuditResult> {
 			enablePerformanceLogging: process.env.NODE_ENV === 'development',
 		});
 
-		const pricingService = new PricingService();
+		const pricingService = PricingService.getInstance();
 		const engine = new MainEngine({
 			digitalOceanService: doService,
 			pricingService,
 		});
 
-		// Register analyzers directly
-		engine
-			.registerAnalyzer(new ZombieDropletsAnalyzer())
-			.registerAnalyzer(new ZombieVolumesAnalyzer())
-			.registerAnalyzer(new OldSnapshotsAnalyzer())
-			.registerAnalyzer(new RedundantBackupsAnalyzer())
-			.registerAnalyzer(new DropletDowngradeAnalyzer())
-			.registerAnalyzer(new DatabaseOptimizationAnalyzer())
-			.registerAnalyzer(new ConsolidateDropletsAnalyzer())
-			.registerAnalyzer(new ChangeRegionAnalyzer())
-			.registerAnalyzer(new IdleLoadBalancersAnalyzer())
-			.registerAnalyzer(new DuplicateSnapshotsAnalyzer())
-			.registerAnalyzer(new LargeUnusedVolumesAnalyzer());
+		// Register all analyzers automatically from registry
+		const analyzers = getAllAnalyzers();
+		for (const analyzer of analyzers) {
+			engine.registerAnalyzer(analyzer);
+		}
 
 		// Analyze
 		const result = await engine.analyze(token);

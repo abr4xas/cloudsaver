@@ -2,16 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef, useCallback } from "react";
-import {
-    ArrowRight,
-    ShieldCheck,
-    Zap,
-    ChevronRight,
-} from "lucide-react";
+import { ArrowRight, ShieldCheck, Zap } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTypewriter } from "@/hooks/use-typewriter";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import { useScrollToSection } from "@/hooks/use-scroll-to-section";
+import { ChevronRight } from "lucide-react";
 
 export function Hero() {
     const [isVisible, setIsVisible] = useState(false);
@@ -40,7 +36,10 @@ export function Hero() {
     const { scrollTo } = useScrollToSection();
 
     useEffect(() => {
-        setIsVisible(true);
+        const raf = requestAnimationFrame(() => {
+            setIsVisible(true);
+        });
+        return () => cancelAnimationFrame(raf);
     }, []);
 
     const scrollToAnalysis = useCallback(() => {
@@ -77,22 +76,18 @@ export function Hero() {
                     )}
                 >
                     {/* Badge */}
-                    {/* <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 hover:bg-white/10 transition-colors cursor-default">
+                    <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 hover:bg-white/10 transition-colors cursor-default">
                         <span className="relative flex h-2 w-2">
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-500 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
                         </span>
-                        <span className="text-xs sm:text-sm font-medium text-yellow-400 tracking-wide">
-                            Coming Soon
-                        </span>
-                        <div className="w-px h-3 bg-white/10 mx-1 hidden sm:block" />
                         <a
                             href="/changelog"
                             className="text-xs text-zinc-500 hover:text-zinc-300 flex items-center gap-1 transition-colors"
                         >
                             Read Changelog <ChevronRight className="w-3 h-3" />
                         </a>
-                    </div> */}
+                    </div>
 
                     {/* Main Headline */}
                     <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.1] sm:leading-[0.9] max-w-6xl mx-auto text-balance">
@@ -111,9 +106,11 @@ export function Hero() {
 
                     <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 max-w-4xl mx-auto leading-relaxed font-light px-4">
                         <span className="text-white font-medium">
-                            Get a comprehensive free analysis of your DigitalOcean infrastructure.
+                            Get a comprehensive free analysis of your
+                            DigitalOcean infrastructure.
                         </span>{" "}
-                        We automatically analyze all your resources and generate actionable recommendations to reduce costs.{" "}
+                        We automatically analyze all your resources and generate
+                        actionable recommendations to reduce costs.{" "}
                         <span className="text-emerald-400 font-medium">
                             Completely free. No credit card required.
                         </span>
@@ -131,21 +128,6 @@ export function Hero() {
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </span>
                         </Button>
-
-                        {/* <Button
-                            variant="outline"
-                            size="lg"
-                            className="group text-zinc-400 border-white/10 hover:bg-white/5 hover:text-white text-lg px-8 py-6 h-auto rounded-full min-w-50"
-                            onClick={() =>
-                                window.open(
-                                    "https://github.com/cloudsaver/cloudsaver",
-                                    "_blank"
-                                )
-                            }
-                        >
-                            <Terminal className="w-4 h-4 mr-2 group-hover:text-emerald-400 transition-colors" />
-                            View on GitHub
-                        </Button> */}
                     </div>
 
                     {/* Trust Indicators */}

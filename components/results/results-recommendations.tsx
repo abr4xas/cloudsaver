@@ -4,12 +4,7 @@ import { memo } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { LockedContent } from "@/components/ui/locked-content";
-import {
-    DollarSign,
-    ChevronDown,
-    ChevronUp,
-    Lock,
-} from "lucide-react";
+import { DollarSign, ChevronDown, ChevronUp, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CONFIDENCE_STYLES } from "@/lib/constants";
 
@@ -109,7 +104,9 @@ function ResultsRecommendationsComponent({
                                             <div className="text-sm font-bold text-accent whitespace-nowrap">
                                                 {rec.savings > 0 ? (
                                                     <span className="bg-emerald-500/20 px-2 py-1 rounded text-emerald-400 border border-emerald-500/30">
-                                                        ${rec.savings.toFixed(2)}/mo
+                                                        $
+                                                        {rec.savings.toFixed(2)}
+                                                        /mo
                                                     </span>
                                                 ) : (
                                                     <span className="text-muted-foreground">
@@ -179,7 +176,17 @@ function ResultsRecommendationsComponent({
                                             </p>
                                             <div className="space-y-2">
                                                 {rec.data.recommendations.map(
-                                                    (subRec: any, subIndex: number) => (
+                                                    (
+                                                        subRec: {
+                                                            subtype: string;
+                                                            title: string;
+                                                            resourceName:
+                                                                | string
+                                                                | null;
+                                                            savings: number;
+                                                        },
+                                                        subIndex: number
+                                                    ) => (
                                                         <div
                                                             key={subIndex}
                                                             className="bg-zinc-900/50 rounded-lg p-3 border border-white/5"
@@ -201,9 +208,14 @@ function ResultsRecommendationsComponent({
                                                                     )}
                                                                 </div>
                                                                 <div className="text-xs font-semibold text-emerald-400 whitespace-nowrap">
-                                                                    {subRec.savings > 0 ? (
+                                                                    {subRec.savings >
+                                                                    0 ? (
                                                                         <span className="bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
-                                                                            ${subRec.savings.toFixed(2)}/mo
+                                                                            $
+                                                                            {subRec.savings.toFixed(
+                                                                                2
+                                                                            )}
+                                                                            /mo
                                                                         </span>
                                                                     ) : (
                                                                         "Optimized"
@@ -234,7 +246,8 @@ function ResultsRecommendationsComponent({
                                                         Total Size
                                                     </div>
                                                     <div className="text-zinc-300 font-semibold">
-                                                        {rec.data.totalSizeGB} GB
+                                                        {rec.data.totalSizeGB}{" "}
+                                                        GB
                                                     </div>
                                                 </div>
                                                 <div>
@@ -251,28 +264,29 @@ function ResultsRecommendationsComponent({
                                     )}
 
                                     {/* Warnings */}
-                                    {rec.warnings && rec.warnings.length > 0 && (
-                                        <div className="space-y-2">
-                                            <p className="text-sm font-medium text-amber-400">
-                                                ⚠️ Important Warnings:
-                                            </p>
-                                            <div className="grid gap-2">
-                                                {rec.warnings.map(
-                                                    (
-                                                        warning: string,
-                                                        i: number
-                                                    ) => (
-                                                        <div
-                                                            key={i}
-                                                            className="flex items-start gap-2 text-sm text-zinc-400 bg-amber-500/5 border border-amber-500/20 rounded-lg p-2"
-                                                        >
-                                                            {warning}
-                                                        </div>
-                                                    )
-                                                )}
+                                    {rec.warnings &&
+                                        rec.warnings.length > 0 && (
+                                            <div className="space-y-2">
+                                                <p className="text-sm font-medium text-amber-400">
+                                                    ⚠️ Important Warnings:
+                                                </p>
+                                                <div className="grid gap-2">
+                                                    {rec.warnings.map(
+                                                        (
+                                                            warning: string,
+                                                            i: number
+                                                        ) => (
+                                                            <div
+                                                                key={i}
+                                                                className="flex items-start gap-2 text-sm text-zinc-400 bg-amber-500/5 border border-amber-500/20 rounded-lg p-2"
+                                                            >
+                                                                {warning}
+                                                            </div>
+                                                        )
+                                                    )}
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
+                                        )}
                                 </div>
                             </div>
                         )}

@@ -13,27 +13,33 @@ const DOWNGRADE_MAP: Record<string, string> = {
 	's-1vcpu-1gb': 's-1vcpu-512mb-10gb',
 };
 
-/**
- * DropletDowngradeAnalyzer
- *
- * Detects underutilized Droplets based on CPU and RAM metrics
- * and suggests downgrades to smaller plans for cost savings.
- */
+interface DropletWithMetrics {
+	id: string | number;
+	name: string;
+	status: string;
+	size: { slug: string } | string;
+	metrics: DropletMetrics;
+}
+
 export class DropletDowngradeAnalyzer implements Analyzer {
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 
-		for (const droplet of data.droplets) {
+		for (const d of data.droplets) {
+			const droplet = d as DropletWithMetrics;
 			// Skip if no metrics available or droplet is not active
-			if (!droplet.metrics || droplet.status !== 'active') {
+			if (!droplet.metrics || droplet.status !== "active") {
 				continue;
 			}
 
 			const metrics: DropletMetrics = droplet.metrics;
-			const size = droplet.size?.slug || droplet.size;
+			const size =
+				typeof droplet.size === "object"
+					? droplet.size.slug
+					: droplet.size;
 
 			// Skip if not a basic droplet or smallest tier
-			if (!DROPLET_PRICING[size] || size === 's-1vcpu-512mb-10gb') {
+			if (!DROPLET_PRICING[size] || size === "s-1vcpu-512mb-10gb") {
 				continue;
 			}
 
@@ -52,7 +58,7 @@ export class DropletDowngradeAnalyzer implements Analyzer {
 	}
 
 	private analyzeDroplet(
-		droplet: any,
+		droplet: DropletWithMetrics,
 		metrics: DropletMetrics,
 		currentSize: string
 	): Recommendation | null {

@@ -1,12 +1,20 @@
 import { Analyzer, Recommendation, ResourceData } from "../types";
 
+interface Snapshot {
+	id: string;
+	name: string;
+	created_at: string;
+	min_disk_size: number;
+}
+
 export class OldSnapshotsAnalyzer implements Analyzer {
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 		const sixMonthsAgo = new Date();
 		sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
 
-		data.snapshots.forEach((snapshot) => {
+		(data.snapshots as unknown[]).forEach((s) => {
+			const snapshot = s as Snapshot;
 			// Snapshots are ~$0.05 per GB per month
 			const createdAt = new Date(snapshot.created_at);
 

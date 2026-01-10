@@ -17,17 +17,22 @@ const REGION_LATENCIES: Record<string, Record<string, number>> = {
 	'syd1': { 'nyc1': 220, 'nyc3': 220, 'sfo3': 140, 'ams3': 280, 'sgp1': 100, 'lon1': 290, 'fra1': 285, 'tor1': 200, 'blr1': 110, 'syd1': 0 },
 };
 
-/**
- * ChangeRegionAnalyzer
- *
- * Analyzes traffic patterns to suggest relocating droplets
- * to regions closer to the majority of users for better performance.
- */
+interface DropletWithTraffic {
+	id: string | number;
+	name: string;
+	status: string;
+	region?: { slug: string } | string;
+	trafficAnalysis?: {
+		primarySourceRegion: string;
+		trafficPercentage: number;
+	};
+}
+
 export class ChangeRegionAnalyzer implements Analyzer {
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 
-		for (const droplet of data.droplets) {
+		for (const droplet of data.droplets as DropletWithTraffic[]) {
 			// Skip if no traffic analysis data
 			if (!droplet.trafficAnalysis) {
 				continue;
@@ -47,9 +52,18 @@ export class ChangeRegionAnalyzer implements Analyzer {
 		return recommendations;
 	}
 
-	private analyzeDroplet(droplet: any): Recommendation | null {
-		const currentRegion = droplet.region?.slug || droplet.region;
-		const { primarySourceRegion, trafficPercentage } = droplet.trafficAnalysis;
+	private analyzeDroplet(droplet: DropletWithTraffic): Recommendation | null {
+		const currentRegion =
+			typeof droplet.region === "object"
+				? droplet.region.slug
+				: droplet.region;
+
+		if (!droplet.trafficAnalysis || !currentRegion) {
+			return null;
+		}
+
+		const { primarySourceRegion, trafficPercentage } =
+			droplet.trafficAnalysis;
 
 		// RULE: Only recommend if 80%+ traffic from a different region
 		if (trafficPercentage < 80 || primarySourceRegion === currentRegion) {

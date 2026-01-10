@@ -11,20 +11,20 @@ import { Results } from "./results";
 import { ShieldCheck, Lock, Cpu } from "lucide-react";
 
 interface TokenInputProps {
-    onAnalysisComplete?: (data: any) => void;
-    showPremiumCta?: boolean;
+    onAnalysisComplete?: (data: unknown) => void;
+    _showPremiumCta?: boolean;
 }
 
 export function TokenInput({
     onAnalysisComplete,
-    showPremiumCta = true,
+    _showPremiumCta = true,
 }: TokenInputProps) {
     const [isFocused, setIsFocused] = useState(false);
 
     const {
         token,
         setToken,
-        state,
+        state: _state,
         isAnalyzing,
         isShaking,
         resultsData,
@@ -125,17 +125,19 @@ export function TokenInput({
             )}
 
             {/* Full Results */}
-            {resultsData && resultsData.recommendations && resultsData.recommendations.length > 0 && (
-                <Results
-                    data={{
-                        monthlyCost: resultsData.monthlyCost,
-                        potentialSavings: resultsData.potentialSavings,
-                        savingsPercentage: resultsData.savingsPercentage,
-                        resourcesFound: resultsData.resourcesFound,
-                        recommendations: resultsData.recommendations || [],
-                    }}
-                />
-            )}
+            {resultsData &&
+                resultsData.recommendations &&
+                resultsData.recommendations.length > 0 && (
+                    <Results
+                        data={{
+                            monthlyCost: resultsData.monthlyCost,
+                            potentialSavings: resultsData.potentialSavings,
+                            savingsPercentage: resultsData.savingsPercentage,
+                            resourcesFound: resultsData.resourcesFound,
+                            recommendations: resultsData.recommendations || [],
+                        }}
+                    />
+                )}
         </section>
     );
 }

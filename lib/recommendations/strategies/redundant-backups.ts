@@ -1,21 +1,37 @@
 import { Analyzer, Recommendation, ResourceData } from "../types";
+interface Droplet {
+	id: string;
+	name: string;
+	backups_enabled: boolean;
+	size: {
+		price_monthly: number;
+	};
+}
+
+interface Snapshot {
+	resource_id: string;
+	resource_type: string;
+	created_at: string;
+}
 
 export class RedundantBackupsAnalyzer implements Analyzer {
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 
-		data.droplets.forEach((droplet) => {
+		(data.droplets as unknown[]).forEach((d) => {
+			const droplet = d as Droplet;
 			// Logic: If backups are enabled AND we detect manual snapshots, it *might* be redundant.
 			// However, we need to be careful. For this MVP Phase 1 spec:
 			// "Backups enabled + Snapshots manuales recientes (3+ in last 30 days)"
 
 			if (droplet.backups_enabled) {
 				// Find snapshots for this droplet
-				const dropletSnapshots = data.snapshots.filter(s => {
+				const dropletSnapshots = (data.snapshots as unknown[]).filter(s => {
+					const snapshot = s as Snapshot;
 					// DO Snapshots for droplets usually have resource_id pointing to droplet
 					// But the 'dots-wrapper' listSnapshots response might vary.
 					// Typically resource_id matches droplet id.
-					return s.resource_id === droplet.id;
+					return snapshot.resource_id === droplet.id;
 				});
 
 				// Filter for recent manual snapshots (last 30 days)
@@ -23,8 +39,9 @@ export class RedundantBackupsAnalyzer implements Analyzer {
 				thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
 				const recentManualSnapshots = dropletSnapshots.filter(s => {
-					const createdAt = new Date(s.created_at);
-					return createdAt > thirtyDaysAgo && s.resource_type === 'droplet';
+					const snapshot = s as Snapshot;
+					const createdAt = new Date(snapshot.created_at);
+					return createdAt > thirtyDaysAgo && snapshot.resource_type === 'droplet';
 				});
 
 				if (recentManualSnapshots.length >= 3) {

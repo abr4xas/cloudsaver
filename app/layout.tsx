@@ -42,9 +42,11 @@ export const metadata: Metadata = {
     "cloud waste",
     "infrastructure audit",
   ],
-  authors: [{ name: "CloudSaver" }],
-  creator: "CloudSaver",
+  authors: [{ name: "Angel Cruz", url: "https://www.angelcruz.dev" }],
+  creator: "Angel Cruz",
   publisher: "CloudSaver",
+  applicationName: "CloudSaver",
+  category: "Developer Tools",
   alternates: {
     canonical: "/",
   },
@@ -62,8 +64,12 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "CloudSaver - DigitalOcean Cost Optimization",
+        type: "image/png",
       },
     ],
+    // Additional Open Graph properties
+    determiner: "auto",
+    countryName: "United States",
   },
   twitter: {
     card: "summary_large_image",
@@ -71,7 +77,8 @@ export const metadata: Metadata = {
     description:
       "Get a comprehensive one-time analysis of your DigitalOcean infrastructure. Automatically identify optimization opportunities and discover ways to reduce costs.",
     images: [`${siteUrl}/twitter-card.png`],
-    creator: "@cloudsaver",
+    creator: "@abr4xas", // GitHub username of creator
+    site: "@cloudsaver", // Site Twitter handle if available
   },
   robots: {
     index: true,
@@ -103,7 +110,16 @@ export const metadata: Metadata = {
   },
   verification: {
     // Add Google Search Console verification if needed
-    // google: "your-verification-code",
+    // google: process.env.GOOGLE_SITE_VERIFICATION,
+    // Add other verification services
+    // yandex: process.env.YANDEX_VERIFICATION,
+    // bing: process.env.BING_VERIFICATION,
+  },
+  // Additional metadata
+  other: {
+    "theme-color": "#18181b", // Dark theme color for mobile browsers
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
 }
 

@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { getSiteUrl } from "@/lib/env";
+import { generateBreadcrumbSchema } from "@/lib/structured-data";
 
 const siteUrl = getSiteUrl();
 
@@ -28,11 +29,23 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPage() {
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Privacy Policy", url: "/privacy" },
+  ]);
+
   return (
-    <div className="relative min-h-screen grain-texture">
-      <div className="mesh-gradient" />
-      <Navbar />
-      <div className="relative z-10 pt-16">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+      <div className="relative min-h-screen grain-texture">
+        <div className="mesh-gradient" />
+        <Navbar />
+        <div className="relative z-10 pt-16">
         <div className="max-w-4xl mx-auto px-4 py-20">
           <h1 className="text-4xl font-bold text-white mb-8">Privacy Policy</h1>
 
@@ -110,5 +123,6 @@ export default function PrivacyPage() {
         <Footer />
       </div>
     </div>
+    </>
   );
 }

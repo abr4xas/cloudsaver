@@ -2,16 +2,8 @@
 
 import { memo } from "react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { LockedContent } from "@/components/ui/locked-content";
-import { ArrowRight } from "lucide-react";
-import {
-    Cell,
-    Pie,
-    PieChart,
-    ResponsiveContainer,
-    Tooltip,
-} from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { CHART_COLORS } from "@/lib/constants";
 
 interface ChartData {
@@ -52,12 +44,16 @@ function ResultsChartComponent({
                                 dataKey="value"
                                 stroke="none"
                             >
-                                            {chartData.map((entry, index) => (
-                                                <Cell
-                                                    key={`cell-${index}`}
-                                                    fill={CHART_COLORS[index % CHART_COLORS.length]}
-                                                />
-                                            ))}
+                                {chartData.map((entry, index) => (
+                                    <Cell
+                                        key={`cell-${index}`}
+                                        fill={
+                                            CHART_COLORS[
+                                                index % CHART_COLORS.length
+                                            ]
+                                        }
+                                    />
+                                ))}
                             </Pie>
                             <Tooltip
                                 contentStyle={{

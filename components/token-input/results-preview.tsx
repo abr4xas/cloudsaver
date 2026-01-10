@@ -3,13 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-    TrendingDown,
-    DollarSign,
-    Package,
-    Sparkles,
-    ArrowRight,
-} from "lucide-react";
+import { TrendingDown, Sparkles, ArrowRight } from "lucide-react";
 import type { AnalysisResult } from "@/hooks/use-analysis";
 
 interface ResultsPreviewProps {
@@ -70,7 +64,8 @@ export function ResultsPreview({
                                 <div className="flex items-center gap-2 flex-wrap">
                                     {resultsData.potentialSavings > 0 && (
                                         <span className="bg-emerald-500/20 px-2 sm:px-2.5 py-1 rounded-lg text-xs sm:text-sm border border-emerald-500/30 text-emerald-400 font-medium">
-                                            -{resultsData.savingsPercentage}% reduction
+                                            -{resultsData.savingsPercentage}%
+                                            reduction
                                         </span>
                                     )}
                                 </div>
@@ -85,7 +80,8 @@ export function ResultsPreview({
                                             Current
                                         </div>
                                         <div className="text-base sm:text-lg font-semibold text-zinc-300">
-                                            ${resultsData.monthlyCost.toFixed(2)}
+                                            $
+                                            {resultsData.monthlyCost.toFixed(2)}
                                         </div>
                                         <div className="text-[10px] sm:text-xs text-zinc-500">
                                             per month
@@ -96,7 +92,11 @@ export function ResultsPreview({
                                             Optimized
                                         </div>
                                         <div className="text-base sm:text-lg font-semibold text-emerald-400">
-                                            ${(resultsData.monthlyCost - resultsData.potentialSavings).toFixed(2)}
+                                            $
+                                            {(
+                                                resultsData.monthlyCost -
+                                                resultsData.potentialSavings
+                                            ).toFixed(2)}
                                         </div>
                                         <div className="text-xs text-emerald-500/60">
                                             per month
@@ -112,7 +112,11 @@ export function ResultsPreview({
                                                 Annual Savings
                                             </div>
                                             <div className="text-sm sm:text-base font-bold text-white">
-                                                ${(resultsData.potentialSavings * 12).toFixed(2)}
+                                                $
+                                                {(
+                                                    resultsData.potentialSavings *
+                                                    12
+                                                ).toFixed(2)}
                                             </div>
                                         </div>
                                         <div className="mt-2 h-1.5 bg-zinc-800 rounded-full overflow-hidden">
@@ -219,7 +223,10 @@ export function ResultsPreview({
                                         Upgrade to Premium to see detailed
                                         recommendations, priority actions, cost
                                         distribution charts, and continuous
-                                        monitoring. <span className="text-violet-400 font-medium">(Coming soon)</span>
+                                        monitoring.{" "}
+                                        <span className="text-violet-400 font-medium">
+                                            (Coming soon)
+                                        </span>
                                     </p>
                                 </div>
                             </div>

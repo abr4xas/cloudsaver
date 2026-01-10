@@ -11,7 +11,7 @@ interface ResultsMetricsProps {
     resourcesFound: number;
     recommendationsCount: number;
     highConfidenceCount: number;
-    animatedValues: {
+    _animatedValues: {
         monthlyCost: number;
         potentialSavings: number;
         resourcesFound: number;
@@ -25,7 +25,7 @@ function ResultsMetricsComponent({
     resourcesFound,
     recommendationsCount,
     highConfidenceCount,
-    animatedValues,
+    _animatedValues,
 }: ResultsMetricsProps) {
     // Memoize calculations to avoid recalculating on every render
     const optimizedCost = useMemo(

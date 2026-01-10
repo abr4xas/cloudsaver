@@ -3,24 +3,27 @@
 
 interface DOTSClient {
 	droplet: {
-		listDroplets: (params: { per_page: number }) => Promise<any>;
+		listDroplets: (params: { per_page: number }) => Promise<{ data: unknown }>;
 	};
 	volume: {
-		listVolumes: (params: { per_page: number }) => Promise<any>;
+		listVolumes: (params: { per_page: number }) => Promise<{ data: unknown }>;
 	};
 	snapshot: {
-		listSnapshots: (params: { per_page: number }) => Promise<any>;
+		listSnapshots: (params: { per_page: number }) => Promise<{ data: unknown }>;
+	};
+	account: {
+		getAccount: () => Promise<{ data: unknown }>;
 	};
 }
 
 export function getDOTS(token: string): DOTSClient {
-	const baseURL = 'https://api.digitalocean.com/v2';
+	const baseURL = "https://api.digitalocean.com/v2";
 
 	const fetchAPI = async (endpoint: string) => {
 		const response = await fetch(`${baseURL}${endpoint}`, {
 			headers: {
-				'Authorization': `Bearer ${token}`,
-				'Content-Type': 'application/json',
+				Authorization: `Bearer ${token}`,
+				"Content-Type": "application/json",
 			},
 		});
 
@@ -34,19 +37,31 @@ export function getDOTS(token: string): DOTSClient {
 	return {
 		droplet: {
 			listDroplets: async (params) => {
-				const data = await fetchAPI(`/droplets?per_page=${params.per_page}`);
+				const data = await fetchAPI(
+					`/droplets?per_page=${params.per_page}`
+				);
 				return { data };
 			},
 		},
 		volume: {
 			listVolumes: async (params) => {
-				const data = await fetchAPI(`/volumes?per_page=${params.per_page}`);
+				const data = await fetchAPI(
+					`/volumes?per_page=${params.per_page}`
+				);
 				return { data };
 			},
 		},
 		snapshot: {
 			listSnapshots: async (params) => {
-				const data = await fetchAPI(`/snapshots?per_page=${params.per_page}`);
+				const data = await fetchAPI(
+					`/snapshots?per_page=${params.per_page}`
+				);
+				return { data };
+			},
+		},
+		account: {
+			getAccount: async () => {
+				const data = await fetchAPI("/account");
 				return { data };
 			},
 		},

@@ -67,11 +67,27 @@ export class ConsolidateDropletsAnalyzer implements Analyzer {
 		return recommendations;
 	}
 
-	private filterCandidates(droplets: any[]): ConsolidationCandidate[] {
+	private filterCandidates(droplets: unknown[]): ConsolidationCandidate[] {
 		const candidates: ConsolidationCandidate[] = [];
 
-		for (const droplet of droplets) {
-			const size = droplet.size?.slug || droplet.size;
+		for (const d of droplets) {
+			const droplet = d as {
+				id: string | number;
+				name: string;
+				status: string;
+				size?: { slug: string; price_monthly?: number } | string;
+				region?: { slug: string } | string;
+				metrics?: { cpuAvg: number; memoryAvg: number };
+			};
+
+			const size =
+				typeof droplet.size === "object"
+					? droplet.size?.slug
+					: droplet.size;
+
+			if (!size) {
+				continue;
+			}
 
 			// Must be a small droplet size
 			if (!SMALL_DROPLET_SIZES.includes(size)) {
@@ -79,7 +95,7 @@ export class ConsolidateDropletsAnalyzer implements Analyzer {
 			}
 
 			// Must be active
-			if (droplet.status !== 'active') {
+			if (droplet.status !== "active") {
 				continue;
 			}
 
@@ -89,13 +105,27 @@ export class ConsolidateDropletsAnalyzer implements Analyzer {
 				continue;
 			}
 
-			const monthlyCost = DROPLET_PRICING[size] || droplet.size?.price_monthly || 0;
+			const monthlyCost =
+				DROPLET_PRICING[size] ||
+				(typeof droplet.size === "object"
+					? droplet.size.price_monthly
+					: 0) ||
+				0;
+
+			const region =
+				typeof droplet.region === "object"
+					? droplet.region.slug
+					: droplet.region;
+
+			if (!region) {
+				continue;
+			}
 
 			candidates.push({
 				id: droplet.id?.toString(),
 				name: droplet.name,
 				size,
-				region: droplet.region?.slug || droplet.region,
+				region,
 				monthlyCost,
 				vcpus: SIZE_VCPUS[size] || 1,
 			});

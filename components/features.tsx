@@ -10,11 +10,13 @@ import {
     Server,
     Code2,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 export function Features() {
     return (
-        <section id="features" className="py-20 sm:py-32 px-4 sm:px-6 relative overflow-hidden">
+        <section
+            id="features"
+            className="py-20 sm:py-32 px-4 sm:px-6 relative overflow-hidden"
+        >
             {/* Background Grain/Noise */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150 mix-blend-overlay"></div>
 
@@ -24,7 +26,11 @@ export function Features() {
                         Comprehensive Infrastructure Analysis
                     </h2>
                     <p className="text-lg sm:text-xl text-zinc-400 leading-relaxed font-light">
-                        Get a free comprehensive analysis of all your DigitalOcean resources. We automatically identify optimization opportunities and generate actionable recommendations to reduce costs—completely free, no credit card required.
+                        Get a free comprehensive analysis of all your
+                        DigitalOcean resources. We automatically identify
+                        optimization opportunities and generate actionable
+                        recommendations to reduce costs—completely free, no
+                        credit card required.
                     </p>
                 </div>
 
@@ -47,10 +53,12 @@ export function Features() {
                             <h3 className="text-xl sm:text-2xl font-medium text-white mb-2">
                                 Secure API Processing
                             </h3>
-                                    <p className="text-sm sm:text-base text-zinc-400 max-w-md">
-                                Your read-only token is used to analyze your account and immediately
-                                discarded after analysis. We don't store tokens permanently, and we never
-                                have access to sensitive information. Your data stays private.
+                            <p className="text-sm sm:text-base text-zinc-400 max-w-md">
+                                Your read-only token is used to analyze your
+                                account and immediately discarded after
+                                analysis. We don't store tokens permanently, and
+                                we never have access to sensitive information.
+                                Your data stays private.
                             </p>
                         </div>
                     </Card>
@@ -67,7 +75,10 @@ export function Features() {
                                 Instant Results
                             </h3>
                             <p className="text-sm sm:text-base text-zinc-400 mb-6 sm:mb-8">
-                                Get a complete report with recommendations in 30 seconds or less. Each recommendation includes a confidence level so you know how safe it is to implement.
+                                Get a complete report with recommendations in 30
+                                seconds or less. Each recommendation includes a
+                                confidence level so you know how safe it is to
+                                implement.
                             </p>
 
                             {/* Abstract Visualization */}
@@ -118,7 +129,11 @@ export function Features() {
                                 All Regions Scanned
                             </h3>
                             <p className="text-sm sm:text-base text-zinc-400 max-w-sm">
-                                Analyzes all 10 types of optimization opportunities across your entire DigitalOcean infrastructure. Identifies underutilized resources, zombie resources, consolidation opportunities, and more.
+                                Analyzes all 10 types of optimization
+                                opportunities across your entire DigitalOcean
+                                infrastructure. Identifies underutilized
+                                resources, zombie resources, consolidation
+                                opportunities, and more.
                             </p>
                         </div>
                         {/* Map Abstract */}
@@ -137,7 +152,9 @@ export function Features() {
                                 Zombie Hunter
                             </h3>
                             <p className="text-xs sm:text-sm text-zinc-500">
-                                Detects powered-off droplets, unattached volumes, unused IPs, inactive load balancers, and old snapshots.
+                                Detects powered-off droplets, unattached
+                                volumes, unused IPs, inactive load balancers,
+                                and old snapshots.
                             </p>
                         </div>
                     </Card>

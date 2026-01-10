@@ -11,13 +11,23 @@
  */
 
 import { isDemoToken, DEMO_DATA } from '@/lib/demo-data';
-import { RecommendationEngine } from '@/lib/recommendations';
 import { Recommendation } from '@/lib/recommendations/types';
 import { DigitalOceanService } from '@/lib/services/digitalocean/digitalocean-service';
 import { PricingService } from '@/lib/services/pricing/pricing-service';
 import { RecommendationEngine as MainEngine } from '@/lib/services/analysis/recommendation-engine';
-import { logError } from '@/lib/error-handler';
-import { ValidationError } from '@/lib/errors';
+import { logError } from "@/lib/error-handler";
+// Import analyzers directly
+import { ZombieDropletsAnalyzer } from '@/lib/recommendations/strategies/zombie-droplets';
+import { ZombieVolumesAnalyzer } from '@/lib/recommendations/strategies/zombie-volumes';
+import { OldSnapshotsAnalyzer } from '@/lib/recommendations/strategies/old-snapshots';
+import { RedundantBackupsAnalyzer } from '@/lib/recommendations/strategies/redundant-backups';
+import { DropletDowngradeAnalyzer } from '@/lib/recommendations/strategies/droplet-downgrade';
+import { DatabaseOptimizationAnalyzer } from '@/lib/recommendations/strategies/database-optimization';
+import { ConsolidateDropletsAnalyzer } from '@/lib/recommendations/strategies/consolidate-droplets';
+import { ChangeRegionAnalyzer } from '@/lib/recommendations/strategies/change-region';
+import { IdleLoadBalancersAnalyzer } from '@/lib/recommendations/strategies/idle-load-balancers';
+import { DuplicateSnapshotsAnalyzer } from '@/lib/recommendations/strategies/duplicate-snapshots';
+import { LargeUnusedVolumesAnalyzer } from '@/lib/recommendations/strategies/large-unused-volumes';
 
 export interface AuditResult {
 	monthlyCost: number;
@@ -66,14 +76,19 @@ export async function analyzeAccount(token: string): Promise<AuditResult> {
 			pricingService,
 		});
 
-		// Register analyzers
-		const analyzersEngine = new RecommendationEngine();
-		// Access private analyzers array (type-safe access)
-		const analyzers = (analyzersEngine as unknown as { analyzers: Array<{ analyze: (data: unknown) => Promise<unknown[]> }> }).analyzers;
-
-		analyzers.forEach((analyzer) => {
-			engine.registerAnalyzer(analyzer);
-		});
+		// Register analyzers directly
+		engine
+			.registerAnalyzer(new ZombieDropletsAnalyzer())
+			.registerAnalyzer(new ZombieVolumesAnalyzer())
+			.registerAnalyzer(new OldSnapshotsAnalyzer())
+			.registerAnalyzer(new RedundantBackupsAnalyzer())
+			.registerAnalyzer(new DropletDowngradeAnalyzer())
+			.registerAnalyzer(new DatabaseOptimizationAnalyzer())
+			.registerAnalyzer(new ConsolidateDropletsAnalyzer())
+			.registerAnalyzer(new ChangeRegionAnalyzer())
+			.registerAnalyzer(new IdleLoadBalancersAnalyzer())
+			.registerAnalyzer(new DuplicateSnapshotsAnalyzer())
+			.registerAnalyzer(new LargeUnusedVolumesAnalyzer());
 
 		// Analyze
 		const result = await engine.analyze(token);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, memo } from "react";
+import { useState, useMemo, memo } from "react";
 import { useAnimatedNumbers } from "@/hooks/use-animated-numbers";
 import { ResultsLoading } from "./results/results-loading";
 import { ResultsEmpty } from "./results/results-empty";
@@ -42,7 +42,7 @@ interface ResultsProps {
 
 function ResultsComponent({ data }: ResultsProps) {
     const [expandedItems, setExpandedItems] = useState<number[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, _setIsLoading] = useState(false);
     // Feature gating: Demo mode always shows Pro tier
     const isPro = true;
 
@@ -52,20 +52,16 @@ function ResultsComponent({ data }: ResultsProps) {
         resourcesFound: data.resourcesFound,
     });
 
-    useEffect(() => {
-        // Removed artificial delay for better UX - show results immediately
-        setIsLoading(false);
-    }, []);
-
     const toggleExpand = (index: number) => {
-        setExpandedItems((prev) =>
-            prev.includes(index) ? [] : [index] // Close if already open, open only this one
+        setExpandedItems(
+            (prev) => (prev.includes(index) ? [] : [index]) // Close if already open, open only this one
         );
     };
 
     // Memoize highConfidenceCount to avoid recalculating on every render
     const highConfidenceCount = useMemo(
-        () => data.recommendations.filter((r) => r.confidence === "High").length,
+        () =>
+            data.recommendations.filter((r) => r.confidence === "High").length,
         [data.recommendations]
     );
 
@@ -95,7 +91,7 @@ function ResultsComponent({ data }: ResultsProps) {
                     resourcesFound={data.resourcesFound}
                     recommendationsCount={data.recommendations.length}
                     highConfidenceCount={highConfidenceCount}
-                    animatedValues={animatedValues}
+                    _animatedValues={animatedValues}
                 />
 
                 {/* Detailed Breakdown Section */}

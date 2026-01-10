@@ -4,151 +4,80 @@
 
 CloudSaver is a free, privacy-first tool that analyzes your DigitalOcean infrastructure to identify cost optimization opportunities. Get comprehensive insights in 30 seconds or less, with no sign-up required.
 
-## 🚀 Features
+## 🎯 Why CloudSaver?
 
--   **Comprehensive Analysis**: Analyzes all 10 types of DigitalOcean resources
--   **Privacy-First**: Tokens are processed and immediately discarded
--   **Read-Only Access**: Only requires read-only API tokens
--   **Instant Results**: Get analysis results in 30 seconds or less
--   **Actionable Insights**: Clear recommendations with confidence levels
--   **No Sign-Up Required**: Use completely anonymously
+Are you paying for resources you're not using? CloudSaver scans your entire DigitalOcean infrastructure and finds opportunities to reduce costs—often saving 15-30% of your monthly bill. No sign-up, no tracking, just instant insights.
 
-## 📋 Prerequisites
+## ✨ Key Features
 
--   Node.js 18+
--   pnpm (recommended) or npm/yarn
--   DigitalOcean account with API token
+-   **🔍 Comprehensive Analysis**: Analyzes all DigitalOcean resources (Droplets, Volumes, Snapshots, Databases, Load Balancers, Reserved IPs)
+-   **💰 11 Cost Optimization Analyzers**: Identifies everything from zombie droplets to duplicate snapshots
+-   **🔒 Privacy-First**: Your API token is processed and immediately discarded—we don't store anything
+-   **⚡ Instant Results**: Get a complete analysis in 30 seconds or less
+-   **📊 Actionable Insights**: Each recommendation includes confidence levels, savings estimates, and remediation commands
+-   **🚫 No Sign-Up Required**: Use completely anonymously—just enter your token and get results
+-   **📈 Up-to-Date Pricing**: Includes all 196+ DigitalOcean size variants (AMD, Intel, custom disk sizes) for accurate cost calculations
 
-## 🛠️ Installation
+## 💡 How It Works
 
-1. Clone the repository:
+1. **Enter Your Token**: Provide a read-only DigitalOcean API token (we only need read access)
+2. **Analysis**: CloudSaver fetches all your resources and runs 11 specialized analyzers in parallel
+3. **Get Results**: Receive a comprehensive report with:
+   - Total monthly cost breakdown
+   - Potential savings opportunities with dollar amounts
+   - Detailed recommendations with confidence levels
+   - Ready-to-use remediation commands for each issue
 
-```bash
-git clone https://github.com/yourusername/cloudsaver.git
-cd cloudsaver
-```
-
-2. Install dependencies:
-
-```bash
-pnpm install
-```
-
-3. Set up environment variables:
-
-```bash
-cp .env.example .env.local
-```
-
-Edit `.env.local` and set:
-
-```env
-NEXT_PUBLIC_SITE_URL=https://cloudsaver.io
-```
-
-4. Run the development server:
-
-```bash
-pnpm dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## 📦 Building for Production
-
-```bash
-pnpm build
-pnpm start
-```
-
-## 🏗️ Project Structure
+### Example Results
 
 ```
-cloudsaver/
-├── app/                    # Next.js App Router
-│   ├── api/               # API routes
-│   ├── actions/           # Server actions
-│   └── [pages]/           # Page routes
-├── components/            # React components
-│   ├── ui/               # shadcn/ui components
-│   └── [features]/       # Feature components
-├── lib/                  # Utilities and services
-│   ├── services/         # Business logic services
-│   ├── types/            # TypeScript types
-│   └── utils.ts          # Utility functions
-├── hooks/                # React hooks
-└── public/               # Static assets
+Monthly Cost: $949.15
+Potential Savings: $163.75 (17.25%)
+
+Recommendations:
+1. [High] 4 Powered Off Droplets -> Save $64.00
+2. [Medium] 29 Old Snapshots -> Save $83.75
+3. [Medium] 2 Duplicate Snapshots -> Save $16.00
 ```
 
-## 🔧 Configuration
+## 📊 What We Analyze
 
-### Environment Variables
+CloudSaver includes 11 specialized analyzers to identify cost savings:
 
-See `.env.example` for all available environment variables:
+1. **Zombie Droplets** - Detects powered-off droplets still being charged
+2. **Zombie Volumes** - Finds unattached block storage volumes wasting money
+3. **Old Snapshots** - Identifies snapshots older than 30 days
+4. **Duplicate Snapshots** - Finds redundant snapshots of the same resource
+5. **Redundant Backups** - Detects unnecessary backup configurations
+6. **Droplet Downgrade** - Suggests right-sizing based on actual usage metrics
+7. **Database Optimization** - Recommends database size adjustments
+8. **Consolidate Droplets** - Identifies opportunities to merge resources
+9. **Region Optimization** - Suggests moving resources to cheaper regions
+10. **Idle Load Balancers** - Finds empty or underutilized load balancers
+11. **Large Unused Volumes** - Detects large volumes on powered-off droplets
 
--   `NEXT_PUBLIC_SITE_URL` - Your site URL (required)
--   `RATE_LIMIT_MAX_REQUESTS` - Server-side backup limit (default: 100, very permissive)
--   `RATE_LIMIT_WINDOW_MS` - Rate limit window in ms (default: 60000)
+Each recommendation includes:
+- 💵 **Savings estimate** in USD/month
+- 🎯 **Confidence level** (High/Medium/Low)
+- ⚠️ **Impact assessment** (High/Medium/Low)
+- 🔔 **Warnings** about potential risks
+- 💻 **Remediation commands** to fix the issue immediately
 
-**Note**: Primary rate limiting is done client-side using localStorage (10 requests/minute). Server-side limit is a backup safety net.
+## 🔒 Privacy & Security
 
-### Next.js Configuration
-
-The project uses Next.js 16 with App Router. Key configurations:
-
--   Image optimization enabled
--   Package import optimization for `lucide-react` and `recharts`
--   Security headers configured
--   Standalone output for deployment
-
-## 🧪 Development
-
-### Running Tests
-
-```bash
-pnpm test
-```
-
-### Linting
-
-```bash
-pnpm lint
-```
-
-### Type Checking
-
-```bash
-pnpm type-check
-```
-
-**Rate Limiting:**
-
--   10 requests per minute per IP address
--   Headers: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
-
-## 🔒 Security
-
--   **Read-Only Tokens**: Only read-only API tokens are required
--   **No Storage**: Tokens and analysis results are not stored
--   **Rate Limiting**: Client-side rate limiting using localStorage (no server costs)
+-   **Read-Only Tokens**: Only read-only API tokens are required—we can't modify anything
+-   **No Storage**: Tokens and analysis results are never stored
+-   **No Tracking**: We don't track you, we don't store your data, we don't sell anything
+-   **Client-Side Rate Limiting**: Smart rate limiting to protect both you and our servers
 -   **Input Validation**: All inputs are validated before processing
--   **Error Handling**: Comprehensive error handling and logging
--   **Client-Side Protection**: Rate limiting enforced in browser to reduce server load
 
-## 🎨 Tech Stack
+## 🚀 Get Started
 
--   **Framework**: Next.js 16 (App Router)
--   **React**: 19.2.3
--   **TypeScript**: 5.x
--   **Styling**: Tailwind CSS v4
--   **UI Components**: Radix UI + shadcn/ui
--   **Validation**: Zod
--   **Forms**: React Hook Form
--   **Analytics**: Vercel Analytics
+Simply visit the website, enter your DigitalOcean API token, and get instant insights. No installation, no setup, no hassle.
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our contributing guidelines first.
+Contributions are welcome! Whether it's a bug fix, new analyzer, or documentation improvement, we'd love to have your help.
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -168,7 +97,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📧 Support
 
-For support, please open an issue on GitHub or contact us through our support channels.
+For support, please open an issue on GitHub.
 
 ---
 

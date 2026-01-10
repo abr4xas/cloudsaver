@@ -20,16 +20,23 @@ async function verifyConnection() {
 	try {
 		// Pass token explicitly
 		const dots = getDOTS(token);
-		const { data: account } = await dots.account.getAccount();
+		const { data: account } = (await dots.account.getAccount()) as {
+			data: { account: { email: string; status: string } };
+		};
 
 		console.log('✅ Connection Successful!');
 		console.log(`   Account Email: ${account.account.email}`);
 		console.log(`   Status: ${account.account.status}`);
-	} catch (error: any) {
-		console.error('❌ Connection Failed:', error.message);
-		if (error.response) {
-			console.error('   Status:', error.response.status);
-			console.error('   Body:', error.response.data);
+	} catch (error: unknown) {
+		const errorMessage = error instanceof Error ? error.message : String(error);
+		console.error("❌ Connection Failed:", errorMessage);
+
+		const err = error as {
+			response?: { status: number; data: unknown };
+		};
+		if (err.response) {
+			console.error("   Status:", err.response.status);
+			console.error("   Body:", err.response.data);
 		}
 		process.exit(1);
 	}

@@ -1,4 +1,4 @@
-import { Github, Twitter, Disc } from "lucide-react";
+import { Github, Disc } from "lucide-react";
 
 export function Footer() {
     return (
@@ -23,13 +23,9 @@ export function Footer() {
                         </p>
                         <div className="flex gap-4">
                             <a
-                                href="#"
-                                className="text-zinc-500 hover:text-white transition-colors"
-                            >
-                                <Twitter className="w-5 h-5" />
-                            </a>
-                            <a
-                                href="#"
+                                href="https://github.com/abr4xas/cloudsaver"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="text-zinc-500 hover:text-white transition-colors"
                             >
                                 <Github className="w-5 h-5" />
@@ -98,14 +94,6 @@ export function Footer() {
                                     className="hover:text-indigo-400 transition-colors"
                                 >
                                     Terms
-                                </a>
-                            </li>
-                            <li>
-                                <a
-                                    href="/cookie-policy"
-                                    className="hover:text-indigo-400 transition-colors"
-                                >
-                                    Cookie Policy
                                 </a>
                             </li>
                         </ul>

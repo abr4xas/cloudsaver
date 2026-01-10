@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowRight, Mail, Check, Loader2, AlertCircle } from "lucide-react";
+import { Mail, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useConfetti } from "@/hooks/use-confetti";
@@ -56,9 +56,12 @@ export function CtaSection() {
                         Stay ahead of cloud costs.
                     </h2>
                     <p className="text-base sm:text-lg text-zinc-400">
-                        Get weekly insights on DigitalOcean optimization, discover opportunities to reduce costs,
-                        and learn infrastructure best practices delivered to your inbox.{" "}
-                        <span className="text-indigo-400 font-medium">(Coming soon)</span>
+                        Get weekly insights on DigitalOcean optimization,
+                        discover opportunities to reduce costs, and learn
+                        infrastructure best practices delivered to your inbox.{" "}
+                        <span className="text-indigo-400 font-medium">
+                            (Coming soon)
+                        </span>
                     </p>
                 </div>
 

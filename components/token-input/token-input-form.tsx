@@ -6,7 +6,6 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
@@ -64,9 +63,7 @@ export function TokenInputForm({
                 <div
                     className={cn(
                         "absolute -inset-1 bg-linear-to-r from-indigo-500/20 via-purple-500/20 to-indigo-500/20 rounded-2xl blur-xl transition-opacity duration-700 pointer-events-none",
-                        isFocused || isAnalyzing
-                            ? "opacity-100"
-                            : "opacity-0"
+                        isFocused || isAnalyzing ? "opacity-100" : "opacity-0"
                     )}
                 />
 

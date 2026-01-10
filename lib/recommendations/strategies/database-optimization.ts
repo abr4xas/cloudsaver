@@ -17,12 +17,14 @@ interface DatabaseMetrics {
 	periodDays: number;
 }
 
-/**
- * DatabaseOptimizationAnalyzer
- *
- * Detects underutilized or zombie managed databases and suggests
- * downgrades or deletion for cost savings.
- */
+interface DBWithMetrics {
+	id: string | number;
+	name: string;
+	size: string;
+	engine: string;
+	metrics: DatabaseMetrics;
+}
+
 export class DatabaseOptimizationAnalyzer implements Analyzer {
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
@@ -32,7 +34,8 @@ export class DatabaseOptimizationAnalyzer implements Analyzer {
 			return recommendations;
 		}
 
-		for (const database of data.databases) {
+		for (const d of data.databases) {
+			const database = d as DBWithMetrics;
 			// Skip if no metrics available
 			if (!database.metrics) {
 				continue;
@@ -48,7 +51,9 @@ export class DatabaseOptimizationAnalyzer implements Analyzer {
 
 			// Check for zombie database first (0 connections for 14+ days)
 			if (metrics.avgConnections < 1 && metrics.periodDays >= 14) {
-				recommendations.push(this.createZombieRecommendation(database, metrics));
+				recommendations.push(
+					this.createZombieRecommendation(database, metrics)
+				);
 				continue;
 			}
 
@@ -65,24 +70,24 @@ export class DatabaseOptimizationAnalyzer implements Analyzer {
 	}
 
 	private createZombieRecommendation(
-		database: any,
+		database: DBWithMetrics,
 		metrics: DatabaseMetrics
 	): Recommendation {
 		const monthlyCost = DATABASE_PRICING[database.size] || 0;
 
 		return {
-			type: 'database',
-			subtype: 'zombie_database',
+			type: "database",
+			subtype: "zombie_database",
 			title: `Delete unused database "${database.name}"`,
 			description: `This database has had 0 connections for ${metrics.periodDays} days. You're paying $${monthlyCost}/mo for an unused resource.`,
 			savings: monthlyCost,
-			confidence: 'High',
-			impact: 'Medium',
+			confidence: "High",
+			impact: "Medium",
 			resourceId: database.id?.toString(),
 			resourceName: database.name,
 			warnings: [
-				'💾 Export and backup any important data before deleting',
-				'🔍 Verify this database is truly unused by your applications',
+				"💾 Export and backup any important data before deleting",
+				"🔍 Verify this database is truly unused by your applications",
 			],
 			remediationCommand: `doctl databases delete ${database.id} --force`,
 			data: {
@@ -94,7 +99,7 @@ export class DatabaseOptimizationAnalyzer implements Analyzer {
 	}
 
 	private analyzeUnderutilized(
-		database: any,
+		database: DBWithMetrics,
 		metrics: DatabaseMetrics,
 		currentSize: string
 	): Recommendation | null {

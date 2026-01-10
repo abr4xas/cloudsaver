@@ -26,15 +26,17 @@ export interface Recommendation {
 		avgCpu?: number;
 		avgRam?: number;
 		periodDays?: number;
-		[key: string]: any;
+		[key: string]: unknown;
 	};
 }
 
 export interface ResourceData {
-	droplets: any[];
-	volumes: any[];
-	snapshots: any[];
-	databases?: any[];
+	droplets: unknown[];
+	volumes: unknown[];
+	snapshots: unknown[];
+	databases?: unknown[];
+	load_balancers?: unknown[];
+	reserved_ips?: unknown[];
 }
 
 export interface Analyzer {

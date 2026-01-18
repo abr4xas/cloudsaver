@@ -51,7 +51,7 @@ export function TokenInputForm({
             <div
                 className={cn(
                     "w-full relative group transition-transform duration-100",
-                    isShaking && "-translate-x-2.5 animate-shake"
+                    isShaking && "-translate-x-2.5 animate-shake",
                 )}
                 style={{
                     animation: isShaking
@@ -63,21 +63,21 @@ export function TokenInputForm({
                 <div
                     className={cn(
                         "absolute -inset-1 bg-linear-to-r from-indigo-500/20 via-purple-500/20 to-indigo-500/20 rounded-2xl blur-xl transition-opacity duration-700 pointer-events-none",
-                        isFocused || isAnalyzing ? "opacity-100" : "opacity-0"
+                        isFocused || isAnalyzing ? "opacity-100" : "opacity-0",
                     )}
                 />
 
                 <div
                     className={cn(
-                        "relative bg-[#0A0A0A] rounded-xl p-2 transition-all duration-300",
+                        "relative bg-[#0A0A0A] rounded-xl p-2 transition-[box-shadow,background-color,ring] duration-300",
                         isFocused || isAnalyzing
                             ? "shadow-2xl ring-1 ring-indigo-500/50"
-                            : "shadow-lg border border-white/5"
+                            : "shadow-lg border border-white/5",
                     )}
                 >
                     <div className="relative flex items-center">
                         <div className="absolute left-4 text-zinc-600 transition-colors group-focus-within:text-zinc-400">
-                            <Terminal className="w-5 h-5" />
+                            <Terminal className="w-5 h-5" aria-hidden="true" />
                         </div>
                         <Input
                             type="password"
@@ -93,6 +93,7 @@ export function TokenInputForm({
                             disabled={isAnalyzing}
                             spellCheck={false}
                             aria-invalid={isShaking}
+                            aria-label="DigitalOcean API Token"
                         />
                         <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10 px-2 sm:px-3 py-1 sm:py-1.5 bg-[#0A0A0A] border border-white/5 rounded text-[9px] sm:text-[10px] text-zinc-500 font-mono shadow-sm">
                             READ-ONLY
@@ -112,7 +113,7 @@ export function TokenInputForm({
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full mt-6 px-1 gap-4 sm:gap-0">
                 <Dialog>
                     <DialogTrigger asChild>
-                        <button className="text-sm text-zinc-600 hover:text-zinc-400 transition-colors flex items-center gap-1.5 group">
+                        <button className="text-sm text-zinc-600 hover:text-zinc-400 transition-colors flex items-center gap-1.5 group focus-visible:ring-1 focus-visible:ring-zinc-500 focus-visible:outline-none rounded-sm">
                             <span className="border-b border-white/0 group-hover:border-zinc-500 transition-all">
                                 Where is my token?
                             </span>
@@ -183,15 +184,16 @@ export function TokenInputForm({
                     variant="ghost"
                     className={cn(
                         "group text-zinc-400 hover:text-white hover:bg-transparent px-0 transition-all",
-                        token.trim() && "text-indigo-400 hover:text-indigo-300"
+                        token.trim() && "text-indigo-400 hover:text-indigo-300",
                     )}
                 >
                     <span className="mr-2">Start Analysis</span>
                     <ChevronRight
                         className={cn(
                             "w-4 h-4 transition-transform",
-                            "group-hover:translate-x-1"
+                            "group-hover:translate-x-1",
                         )}
+                        aria-hidden="true"
                     />
                 </Button>
             </div>

@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import useSWRMutation from "swr/mutation";
 import { useConfetti } from "./use-confetti";
 import { ANIMATION_DURATIONS } from "@/lib/constants";
 import type { Recommendation } from "@/lib/types/api";
@@ -26,12 +27,77 @@ interface UseAnalysisOptions {
 	onAnalysisComplete?: (data: AnalysisResult) => void;
 }
 
+/**
+ * Fetcher for SWR mutation
+ */
+async function analysisFetcher(
+	url: string,
+	{ arg }: { arg: string }
+): Promise<AnalysisResult> {
+	// Check client-side rate limit first
+	const rateLimitCheck = checkClientRateLimit();
+	if (!rateLimitCheck.allowed) {
+		const resetInSeconds = Math.ceil(
+			(rateLimitCheck.resetAt - Date.now()) / 1000
+		);
+		throw new Error(
+			`Rate limit exceeded. Please wait ${resetInSeconds} seconds before trying again.`
+		);
+	}
+
+	const response = await fetch(url, {
+		method: "POST",
+		headers: {
+			"X-DOP-Token": arg,
+			Accept: "application/json",
+		},
+	});
+
+	if (!response.ok) {
+		let errorMessage = "Failed to analyze account";
+
+		try {
+			const errorText = await response.text();
+			if (errorText) {
+				const errorData = JSON.parse(errorText);
+				errorMessage = errorData.message || errorData.error || errorMessage;
+			} else {
+				errorMessage = response.statusText || errorMessage;
+			}
+		} catch {
+			errorMessage = response.statusText || errorMessage;
+		}
+
+		throw new Error(errorMessage);
+	}
+
+	const json = await response.json();
+
+	if (json.error) {
+		throw new Error(json.error || "Failed to analyze account");
+	}
+
+	const apiData = json.data || json;
+
+	return {
+		monthlyCost: apiData.monthlyCost ?? 0,
+		potentialSavings: apiData.potentialSavings ?? 0,
+		savingsPercentage: apiData.savingsPercentage ?? 0,
+		resourcesFound: apiData.resourcesFound ?? 0,
+		opportunities: apiData.opportunities ?? 0,
+		highConfidence: apiData.highConfidence ?? 0,
+		recommendations: (apiData.recommendations || []) as Recommendation[],
+	};
+}
+
 export function useAnalysis({ onAnalysisComplete }: UseAnalysisOptions = {}) {
 	const [token, setToken] = useState("");
 	const [state, setState] = useState<AnalysisState>("idle");
 	const [isShaking, setIsShaking] = useState(false);
 	const [resultsData, setResultsData] = useState<AnalysisResult | null>(null);
-	const [cleanBillData, setCleanBillData] = useState<CleanBillData | null>(null);
+	const [cleanBillData, setCleanBillData] = useState<CleanBillData | null>(
+		null
+	);
 	const { trigger: triggerConfetti } = useConfetti();
 
 	const triggerShake = useCallback(() => {
@@ -39,103 +105,9 @@ export function useAnalysis({ onAnalysisComplete }: UseAnalysisOptions = {}) {
 		setTimeout(() => setIsShaking(false), ANIMATION_DURATIONS.SHAKE);
 	}, []);
 
-	const callAnalyzeAPI = useCallback(
-		async (token: string): Promise<AnalysisResult> => {
-			// Check client-side rate limit first
-			const rateLimitCheck = checkClientRateLimit();
-			if (!rateLimitCheck.allowed) {
-				const resetInSeconds = Math.ceil((rateLimitCheck.resetAt - Date.now()) / 1000);
-				return {
-					monthlyCost: 0,
-					potentialSavings: 0,
-					savingsPercentage: 0,
-					resourcesFound: 0,
-					recommendations: [],
-					error: `Rate limit exceeded. Please wait ${resetInSeconds} seconds before trying again.`,
-				};
-			}
-
-			try {
-				const response = await fetch("/api/analyze", {
-					method: "POST",
-					headers: {
-						"X-DOP-Token": token,
-						"Accept": "application/json",
-					},
-				});
-
-				if (!response.ok) {
-					let errorMessage = "Failed to analyze account";
-
-					try {
-						const errorText = await response.text();
-						if (errorText) {
-							const errorData = JSON.parse(errorText);
-							errorMessage =
-								errorData.message ||
-								errorData.error ||
-								errorMessage;
-						} else {
-							errorMessage = response.statusText || errorMessage;
-						}
-					} catch {
-						// If response is not JSON, use status text
-						errorMessage = response.statusText || errorMessage;
-					}
-
-					return {
-						monthlyCost: 0,
-						potentialSavings: 0,
-						savingsPercentage: 0,
-						resourcesFound: 0,
-						recommendations: [],
-						error: errorMessage,
-					};
-				}
-
-				const json = await response.json();
-
-				// Check for error in response
-				if (json.error) {
-					return {
-						monthlyCost: 0,
-						potentialSavings: 0,
-						savingsPercentage: 0,
-						resourcesFound: 0,
-						recommendations: [],
-						error: json.error || "Failed to analyze account",
-					};
-				}
-
-				const apiData = json.data || json;
-
-				return {
-					monthlyCost: apiData.monthlyCost ?? 0,
-					potentialSavings: apiData.potentialSavings ?? 0,
-					savingsPercentage: apiData.savingsPercentage ?? 0,
-					resourcesFound: apiData.resourcesFound ?? 0,
-					opportunities: apiData.opportunities ?? 0,
-					highConfidence: apiData.highConfidence ?? 0,
-					recommendations: (apiData.recommendations || []) as Recommendation[],
-				};
-			} catch (err: unknown) {
-				// Handle network errors, fetch failures, etc.
-				console.error("API call failed:", err);
-				const errorMessage = err instanceof Error
-					? err.message
-					: "Network error: Unable to connect to the server";
-
-				return {
-					monthlyCost: 0,
-					potentialSavings: 0,
-					savingsPercentage: 0,
-					resourcesFound: 0,
-					recommendations: [],
-					error: errorMessage,
-				};
-			}
-		},
-		[]
+	const { trigger: triggerAnalysis } = useSWRMutation(
+		"/api/analyze",
+		analysisFetcher
 	);
 
 	const analyze = useCallback(
@@ -178,11 +150,12 @@ export function useAnalysis({ onAnalysisComplete }: UseAnalysisOptions = {}) {
 				const estimatedDuration = ANIMATION_DURATIONS.ANALYSIS_ESTIMATED;
 				void startAnimation(estimatedDuration);
 
-				// Perform API call in parallel
-				const apiPromise = callAnalyzeAPI(tokenToAnalyze);
+				// Perform API call using SWR mutation
+				const data = await triggerAnalysis(tokenToAnalyze);
 
-				// Wait for API to complete
-				const data = await apiPromise;
+				if (!data) {
+					throw new Error("No data returned from analysis");
+				}
 
 				// Calculate actual API duration
 				const apiDuration = Date.now() - startTime;
@@ -210,8 +183,7 @@ export function useAnalysis({ onAnalysisComplete }: UseAnalysisOptions = {}) {
 					setTimeout(resolve, ANIMATION_DURATIONS.ANALYSIS_COMPLETE_DELAY)
 				);
 
-				if (data.error) {
-					console.error(data.error);
+				if (!data) {
 					triggerShake();
 					setState("error");
 					return;
@@ -244,9 +216,22 @@ export function useAnalysis({ onAnalysisComplete }: UseAnalysisOptions = {}) {
 				console.error(err);
 				triggerShake();
 				setState("error");
+
+				// Update results data with error message for the UI
+				setResultsData({
+					monthlyCost: 0,
+					potentialSavings: 0,
+					savingsPercentage: 0,
+					resourcesFound: 0,
+					recommendations: [],
+					error:
+						err instanceof Error
+							? err.message
+							: "An unexpected error occurred",
+				});
 			}
 		},
-		[onAnalysisComplete, triggerShake, callAnalyzeAPI, triggerConfetti]
+		[onAnalysisComplete, triggerShake, triggerAnalysis, triggerConfetti]
 	);
 
 	const reset = useCallback(() => {

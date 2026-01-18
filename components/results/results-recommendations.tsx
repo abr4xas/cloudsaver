@@ -65,12 +65,12 @@ function ResultsRecommendationsComponent({
                 {recommendations.map((rec, index) => (
                     <Card
                         key={index}
-                        className="group p-0 overflow-hidden border-white/5 bg-white/5 hover:bg-white/10 transition-all duration-300"
+                        className="group p-0 overflow-hidden border-white/5 bg-white/5 hover:bg-white/10 transition-[background-color,box-shadow] duration-300"
                     >
                         <div
                             className={cn(
                                 "p-6",
-                                isPro ? "cursor-pointer" : "cursor-default"
+                                isPro ? "cursor-pointer" : "cursor-default",
                             )}
                             onClick={() => isPro && onToggleExpand(index)}
                             title={
@@ -85,10 +85,13 @@ function ResultsRecommendationsComponent({
                                         "p-3 rounded-xl",
                                         isPro
                                             ? getConfidenceStyle(rec.confidence)
-                                            : "bg-zinc-800/50 border border-white/10"
+                                            : "bg-zinc-800/50 border border-white/10",
                                     )}
                                 >
-                                    <DollarSign className="w-6 h-6" />
+                                    <DollarSign
+                                        className="w-6 h-6"
+                                        aria-hidden="true"
+                                    />
                                 </div>
 
                                 <div className="flex-1 min-w-0">
@@ -129,24 +132,33 @@ function ResultsRecommendationsComponent({
 
                                 <div className="pt-1">
                                     {!isPro ? (
-                                        <Lock className="w-5 h-5 text-zinc-500" />
+                                        <Lock
+                                            className="w-5 h-5 text-zinc-500"
+                                            aria-hidden="true"
+                                        />
                                     ) : expandedItems.includes(index) ? (
-                                        <ChevronUp className="w-5 h-5 text-muted-foreground" />
+                                        <ChevronUp
+                                            className="w-5 h-5 text-muted-foreground"
+                                            aria-hidden="true"
+                                        />
                                     ) : (
-                                        <ChevronDown className="w-5 h-5 text-muted-foreground" />
+                                        <ChevronDown
+                                            className="w-5 h-5 text-muted-foreground"
+                                            aria-hidden="true"
+                                        />
                                     )}
                                 </div>
                             </div>
                         </div>
 
                         {/* Expandable Details */}
-                        {isPro && (
+                        {isPro ? (
                             <div
                                 className={cn(
-                                    "bg-black/20 border-t border-white/5 overflow-hidden transition-all duration-300 ease-in-out",
+                                    "bg-black/20 border-t border-white/5 overflow-hidden transition-[max-height,opacity] duration-300 ease-in-out",
                                     expandedItems.includes(index)
                                         ? "max-h-none opacity-100"
-                                        : "max-h-0 opacity-0"
+                                        : "max-h-0 opacity-0",
                                 )}
                             >
                                 <div className="p-6 pt-4 pb-8 space-y-6">
@@ -154,7 +166,7 @@ function ResultsRecommendationsComponent({
                                         <Badge
                                             variant="outline"
                                             className={getConfidenceStyle(
-                                                rec.confidence
+                                                rec.confidence,
                                             )}
                                         >
                                             {rec.confidence} Confidence
@@ -168,7 +180,7 @@ function ResultsRecommendationsComponent({
                                     </div>
 
                                     {/* Nested recommendations */}
-                                    {rec.data?.recommendations && (
+                                    {rec.data?.recommendations ? (
                                         <div className="space-y-3">
                                             <p className="text-sm font-medium text-foreground">
                                                 Breakdown ({rec.data.count}{" "}
@@ -185,7 +197,7 @@ function ResultsRecommendationsComponent({
                                                                 | null;
                                                             savings: number;
                                                         },
-                                                        subIndex: number
+                                                        subIndex: number,
                                                     ) => (
                                                         <div
                                                             key={subIndex}
@@ -198,14 +210,14 @@ function ResultsRecommendationsComponent({
                                                                             subRec.title
                                                                         }
                                                                     </div>
-                                                                    {subRec.resourceName && (
+                                                                    {subRec.resourceName ? (
                                                                         <div className="text-xs font-mono text-zinc-500">
                                                                             Resource:{" "}
                                                                             {
                                                                                 subRec.resourceName
                                                                             }
                                                                         </div>
-                                                                    )}
+                                                                    ) : null}
                                                                 </div>
                                                                 <div className="text-xs font-semibold text-emerald-400 whitespace-nowrap">
                                                                     {subRec.savings >
@@ -213,7 +225,7 @@ function ResultsRecommendationsComponent({
                                                                         <span className="bg-emerald-500/20 px-2 py-0.5 rounded border border-emerald-500/30">
                                                                             $
                                                                             {subRec.savings.toFixed(
-                                                                                2
+                                                                                2,
                                                                             )}
                                                                             /mo
                                                                         </span>
@@ -223,14 +235,14 @@ function ResultsRecommendationsComponent({
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    )
+                                                    ),
                                                 )}
                                             </div>
                                         </div>
-                                    )}
+                                    ) : null}
 
                                     {/* Snapshot details */}
-                                    {rec.data?.snapshotCount && (
+                                    {rec.data?.snapshotCount ? (
                                         <div className="bg-zinc-900/50 rounded-lg p-4 border border-white/5 space-y-2">
                                             <div className="grid grid-cols-2 gap-3 text-sm">
                                                 <div>
@@ -261,35 +273,34 @@ function ResultsRecommendationsComponent({
                                                 </div>
                                             </div>
                                         </div>
-                                    )}
+                                    ) : null}
 
                                     {/* Warnings */}
-                                    {rec.warnings &&
-                                        rec.warnings.length > 0 && (
-                                            <div className="space-y-2">
-                                                <p className="text-sm font-medium text-amber-400">
-                                                    ⚠️ Important Warnings:
-                                                </p>
-                                                <div className="grid gap-2">
-                                                    {rec.warnings.map(
-                                                        (
-                                                            warning: string,
-                                                            i: number
-                                                        ) => (
-                                                            <div
-                                                                key={i}
-                                                                className="flex items-start gap-2 text-sm text-zinc-400 bg-amber-500/5 border border-amber-500/20 rounded-lg p-2"
-                                                            >
-                                                                {warning}
-                                                            </div>
-                                                        )
-                                                    )}
-                                                </div>
+                                    {rec.warnings && rec.warnings.length > 0 ? (
+                                        <div className="space-y-2">
+                                            <p className="text-sm font-medium text-amber-400">
+                                                ⚠️ Important Warnings:
+                                            </p>
+                                            <div className="grid gap-2">
+                                                {rec.warnings.map(
+                                                    (
+                                                        warning: string,
+                                                        i: number,
+                                                    ) => (
+                                                        <div
+                                                            key={i}
+                                                            className="flex items-start gap-2 text-sm text-zinc-400 bg-amber-500/5 border border-amber-500/20 rounded-lg p-2"
+                                                        >
+                                                            {warning}
+                                                        </div>
+                                                    ),
+                                                )}
                                             </div>
-                                        )}
+                                        </div>
+                                    ) : null}
                                 </div>
                             </div>
-                        )}
+                        ) : null}
                     </Card>
                 ))}
             </div>

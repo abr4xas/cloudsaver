@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import Link from "next/link";
 import { Menu, X, Zap } from "lucide-react";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { useScrollToSection } from "@/hooks/use-scroll-to-section";
@@ -29,28 +30,26 @@ export function Navbar() {
     return (
         <nav
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+                "fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300",
                 isScrolled
                     ? "bg-zinc-950/80 backdrop-blur-xl border-b border-white/5 shadow-lg"
-                    : "bg-transparent"
+                    : "bg-transparent",
             )}
         >
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-14 sm:h-16">
                     {/* Logo */}
-                    <button
-                        onClick={() =>
-                            window.scrollTo({ top: 0, behavior: "smooth" })
-                        }
-                        className="flex items-center gap-2 group"
-                    >
+                    <Link href="/" className="flex items-center gap-2 group">
                         <div className="w-8 h-8 rounded-lg bg-indigo-500/20 border border-indigo-500/30 flex items-center justify-center group-hover:bg-indigo-500/30 transition-colors">
-                            <Zap className="w-4 h-4 text-indigo-400" />
+                            <Zap
+                                className="w-4 h-4 text-indigo-400"
+                                aria-hidden="true"
+                            />
                         </div>
                         <span className="font-semibold text-white text-base sm:text-lg tracking-tight">
                             CloudSaver
                         </span>
-                    </button>
+                    </Link>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-1">
@@ -79,11 +78,14 @@ export function Navbar() {
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className="md:hidden p-2 text-zinc-400 hover:text-white transition-colors"
+                        aria-label={
+                            isMobileMenuOpen ? "Close menu" : "Open menu"
+                        }
                     >
                         {isMobileMenuOpen ? (
-                            <X className="w-6 h-6" />
+                            <X className="w-6 h-6" aria-hidden="true" />
                         ) : (
-                            <Menu className="w-6 h-6" />
+                            <Menu className="w-6 h-6" aria-hidden="true" />
                         )}
                     </button>
                 </div>
@@ -91,8 +93,10 @@ export function Navbar() {
                 {/* Mobile Menu */}
                 <div
                     className={cn(
-                        "md:hidden overflow-hidden transition-all duration-300",
-                        isMobileMenuOpen ? "max-h-80 pb-4" : "max-h-0"
+                        "md:hidden overflow-hidden transition-[max-height,padding,opacity] duration-300",
+                        isMobileMenuOpen
+                            ? "max-h-80 pb-4 opacity-100"
+                            : "max-h-0 opacity-0",
                     )}
                 >
                     <div className="flex flex-col gap-1 pt-2">

@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, unstable_after as after } from "next/server";
 import { DigitalOceanService } from "@/lib/services/digitalocean/digitalocean-service";
 import { PricingService } from "@/lib/services/pricing/pricing-service";
 import { RecommendationEngine } from "@/lib/services/analysis/recommendation-engine";
@@ -132,13 +132,15 @@ async function handleAnalyze(request: Request): Promise<Response> {
 	} catch (error) {
 		// Handle DigitalOcean API errors specifically
 		if (error instanceof DigitalOceanApiException) {
-			logError(error, {
-				component: "analyze-api",
-				action: "digitalocean_api_error",
-				metadata: {
-					statusCode: error.statusCode,
-					code: error.code,
-				},
+			after(() => {
+				logError(error, {
+					component: "analyze-api",
+					action: "digitalocean_api_error",
+					metadata: {
+						statusCode: error.statusCode,
+						code: error.code,
+					},
+				});
 			});
 
 			return NextResponse.json(
@@ -172,9 +174,11 @@ async function handleAnalyze(request: Request): Promise<Response> {
 		}
 
 		// Handle other errors
-		logError(error, {
-			component: "analyze-api",
-			action: "analysis_error",
+		after(() => {
+			logError(error, {
+				component: "analyze-api",
+				action: "analysis_error",
+			});
 		});
 
 		return handleApiError(error);

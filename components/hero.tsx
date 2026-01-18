@@ -2,12 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef, useCallback } from "react";
-import { ArrowRight, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, ShieldCheck, Zap, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTypewriter } from "@/hooks/use-typewriter";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import { useScrollToSection } from "@/hooks/use-scroll-to-section";
-import { ChevronRight } from "lucide-react";
 
 export function Hero() {
     const [isVisible, setIsVisible] = useState(false);
@@ -69,10 +68,10 @@ export function Hero() {
             <div className="max-w-7xl w-full mx-auto text-center relative z-10">
                 <div
                     className={cn(
-                        "space-y-10 transition-all duration-1000",
+                        "space-y-10 transition-[opacity,transform] duration-1000",
                         isVisible
                             ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-10"
+                            : "opacity-0 translate-y-10",
                     )}
                 >
                     {/* Badge */}
@@ -85,7 +84,11 @@ export function Hero() {
                             href="/changelog"
                             className="text-xs text-zinc-500 hover:text-zinc-300 flex items-center gap-1 transition-colors"
                         >
-                            Read Changelog <ChevronRight className="w-3 h-3" />
+                            Read Changelog{" "}
+                            <ChevronRight
+                                className="w-3 h-3"
+                                aria-hidden="true"
+                            />
                         </a>
                     </div>
 
@@ -125,7 +128,10 @@ export function Hero() {
                         >
                             <span className="relative z-10 font-bold flex items-center gap-2">
                                 Start Free Audit
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                <ArrowRight
+                                    className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                                    aria-hidden="true"
+                                />
                             </span>
                         </Button>
                     </div>
@@ -133,19 +139,28 @@ export function Hero() {
                     {/* Trust Indicators */}
                     <div className="pt-12 sm:pt-16 flex flex-wrap justify-center gap-x-6 sm:gap-x-12 gap-y-4 sm:gap-y-6 opacity-60 px-4">
                         <div className="flex items-center gap-2 sm:gap-3">
-                            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                            <ShieldCheck
+                                className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400"
+                                aria-hidden="true"
+                            />
                             <span className="text-xs sm:text-sm font-medium text-zinc-300">
                                 Read-Only Access
                             </span>
                         </div>
                         <div className="flex items-center gap-2 sm:gap-3">
-                            <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" />
+                            <Zap
+                                className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400"
+                                aria-hidden="true"
+                            />
                             <span className="text-xs sm:text-sm font-medium text-zinc-300">
                                 Results in 30s or less
                             </span>
                         </div>
                         <div className="flex items-center gap-2 sm:gap-3">
-                            <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />
+                            <ShieldCheck
+                                className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400"
+                                aria-hidden="true"
+                            />
                             <span className="text-xs sm:text-sm font-medium text-zinc-300">
                                 Token Discarded After Use
                             </span>

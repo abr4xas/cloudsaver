@@ -77,7 +77,7 @@ export function FAQs() {
                         <span className="text-zinc-500">Asked Questions</span>
                     </h2>
                     <p className="text-lg sm:text-xl text-zinc-400 max-w-md font-light leading-relaxed">
-                        Everything you need to know about CloudSaver and how it helps you optimize your DigitalOcean infrastructure costs.
+                        Common questions about safety, speed, savings, and what CloudSaver does—and doesn't do—with your account.
                     </p>
                 </div>
 

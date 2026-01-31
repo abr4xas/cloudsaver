@@ -8,9 +8,9 @@ export function CurrentState() {
     const problems = [
         {
             icon: Server,
-            title: "Underutilized Servers",
+            title: "Oversized Droplets",
             description:
-                "Paying for servers running at minimal capacity, wasting resources and budget on oversized infrastructure.",
+                "Paying for CPU and RAM you rarely use. Right-sizing can cut the bill without touching performance.",
             color: "text-orange-400",
             bgColor: "bg-orange-500/10",
             borderColor: "border-orange-500/20",
@@ -19,25 +19,25 @@ export function CurrentState() {
             icon: AlertTriangle,
             title: "Zombie Resources",
             description:
-                "Powered-off droplets, unattached volumes, and unused IPs still generating monthly costs without providing value.",
+                "Droplets turned off, volumes with no server attached, IPs nobody uses—still on the invoice every month.",
             color: "text-red-400",
             bgColor: "bg-red-500/10",
             borderColor: "border-red-500/20",
         },
         {
             icon: Database,
-            title: "Over-Provisioned Databases",
+            title: "Databases Too Big",
             description:
-                "Database plans sized for peak loads that rarely occur, resulting in unnecessary monthly expenses.",
+                "Plans sized for spikes that never came. You pay for capacity you don't need.",
             color: "text-yellow-400",
             bgColor: "bg-yellow-500/10",
             borderColor: "border-yellow-500/20",
         },
         {
             icon: HardDrive,
-            title: "Accumulated Waste",
+            title: "Snapshots & Backups Piling Up",
             description:
-                "Old snapshots, redundant backups, and inactive load balancers consuming storage and budget month after month.",
+                "Old snapshots and redundant backups add up. Storage you forgot about still costs money.",
             color: "text-purple-400",
             bgColor: "bg-purple-500/10",
             borderColor: "border-purple-500/20",
@@ -61,13 +61,11 @@ export function CurrentState() {
                         Current Reality
                     </div>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-white leading-[1.1]">
-                        Where You Are <br />
-                        <span className="text-zinc-500">Right Now</span>
+                        Paying for What <br />
+                        <span className="text-zinc-500">You Don't Use?</span>
                     </h2>
                     <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed font-light">
-                        Most DigitalOcean accounts accumulate waste over time. Resources that seemed
-                        necessary months ago now sit idle, consuming budget without delivering value.
-                        Without visibility, these costs compound silently.
+                        Droplets left off, snapshots you forgot, volumes nobody uses. Most accounts leak 15–30% of the bill without anyone noticing—until you look.
                     </p>
                 </div>
 
@@ -112,8 +110,7 @@ export function CurrentState() {
                     <div className="inline-flex items-center gap-2 text-zinc-500 text-sm">
                         <Zap className="w-4 h-4" />
                         <span>
-                            These problems compound over time, often unnoticed until costs become
-                            significant
+                            The longer you wait, the more waste adds up—and the harder it is to spot.
                         </span>
                     </div>
                 </div>

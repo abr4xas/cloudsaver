@@ -37,13 +37,13 @@ export function TokenInputForm({
             <div className="text-center space-y-4 sm:space-y-6 mb-8 sm:mb-12 px-4">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-muted-foreground">
                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-                    Secure Environment
+                    Read-only · No storage
                 </div>
                 <h2 className="text-3xl sm:text-4xl text-white font-medium tracking-tight">
-                    Enter the Mainframe
+                    Paste your token. Get your report in under 30 seconds.
                 </h2>
                 <p className="text-zinc-400 text-base sm:text-lg">
-                    Paste your read-only token to begin the audit.
+                    Paste your read-only token below. We never store it.
                 </p>
             </div>
 
@@ -125,7 +125,7 @@ export function TokenInputForm({
                                 Generate Access Token
                             </DialogTitle>
                             <DialogDescription className="text-zinc-500 mt-1">
-                                Follow these strict security directives.
+                                Follow these steps to get your read-only token.
                             </DialogDescription>
                         </div>
                         <div className="p-6 space-y-4">
@@ -187,7 +187,7 @@ export function TokenInputForm({
                         token.trim() && "text-indigo-400 hover:text-indigo-300",
                     )}
                 >
-                    <span className="mr-2">Start Analysis</span>
+                    <span className="mr-2">Get my report</span>
                     <ChevronRight
                         className={cn(
                             "w-4 h-4 transition-transform",

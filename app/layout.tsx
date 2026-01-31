@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | CloudSaver",
   },
   description:
-    "Get a comprehensive one-time analysis of your DigitalOcean infrastructure. Automatically identify optimization opportunities across all 10 types of resources. Discover opportunities to reduce costs with actionable insights.",
+    "Paste your DigitalOcean token. Get a free report in under 30 seconds showing where you can cut costs. Read-only access, no sign-up. 11 checks across droplets, volumes, snapshots, and more.",
   keywords: [
     "DigitalOcean",
     "cloud cost optimization",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     siteName: "CloudSaver",
     title: "CloudSaver - Find Hidden Savings in Your DigitalOcean Infrastructure",
     description:
-      "Get a comprehensive one-time analysis of your DigitalOcean infrastructure. Automatically identify optimization opportunities and discover ways to reduce costs.",
+      "Free report in under 30 seconds. See where you're overpaying on DigitalOcean—droplets, volumes, snapshots, and more. Read-only, no sign-up.",
     images: [
       {
         url: `${siteUrl}/og-image.png`,
@@ -75,10 +75,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CloudSaver - Find Hidden Savings in Your DigitalOcean Infrastructure",
     description:
-      "Get a comprehensive one-time analysis of your DigitalOcean infrastructure. Automatically identify optimization opportunities and discover ways to reduce costs.",
+      "Free report in under 30 seconds. See where you're overpaying on DigitalOcean—droplets, volumes, snapshots, and more. Read-only, no sign-up.",
     images: [`${siteUrl}/twitter-card.png`],
     creator: "@abr4xas", // GitHub username of creator
-    site: "@cloudsaver", // Site Twitter handle if available
   },
   robots: {
     index: true,

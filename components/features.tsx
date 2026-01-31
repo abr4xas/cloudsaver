@@ -23,14 +23,10 @@ export function Features() {
             <div className="max-w-7xl mx-auto space-y-12 sm:space-y-20 relative z-10">
                 <div className="text-center space-y-4 sm:space-y-6 max-w-3xl mx-auto px-4">
                     <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-white">
-                        Comprehensive Infrastructure Analysis
+                        One Report. Every Resource. Real Savings.
                     </h2>
                     <p className="text-lg sm:text-xl text-zinc-400 leading-relaxed font-light">
-                        Get a free comprehensive analysis of all your
-                        DigitalOcean resources. We automatically identify
-                        optimization opportunities and generate actionable
-                        recommendations to reduce costs—completely free, no
-                        credit card required.
+                        We scan droplets, volumes, snapshots, databases, load balancers, and more—then show you where you're overpaying and how much you can save. Free. No sign-up. No card.
                     </p>
                 </div>
 
@@ -51,14 +47,10 @@ export function Features() {
                                 <Shield className="w-5 h-5 text-white" />
                             </div>
                             <h3 className="text-xl sm:text-2xl font-medium text-white mb-2">
-                                Secure API Processing
+                                We Can't Touch Your Account
                             </h3>
                             <p className="text-sm sm:text-base text-zinc-400 max-w-md">
-                                Your read-only token is used to analyze your
-                                account and immediately discarded after
-                                analysis. We don't store tokens permanently, and
-                                we never have access to sensitive information.
-                                Your data stays private.
+                                Read-only token. We scan, then discard it. We don't store tokens or results. Your data never leaves your control.
                             </p>
                         </div>
                     </Card>
@@ -72,13 +64,10 @@ export function Features() {
                                 <Zap className="w-5 h-5 text-indigo-400" />
                             </div>
                             <h3 className="text-xl sm:text-2xl font-medium text-white mb-2">
-                                Instant Results
+                                Report in Under 30 Seconds
                             </h3>
                             <p className="text-sm sm:text-base text-zinc-400 mb-6 sm:mb-8">
-                                Get a complete report with recommendations in 30
-                                seconds or less. Each recommendation includes a
-                                confidence level so you know how safe it is to
-                                implement.
+                                Full report with dollar amounts and copy-paste commands. Each item has a confidence level so you know how solid the recommendation is.
                             </p>
 
                             {/* Abstract Visualization */}
@@ -105,10 +94,10 @@ export function Features() {
                                 <Lock className="w-5 h-5 text-emerald-400" />
                             </div>
                             <h3 className="text-lg sm:text-xl font-medium text-white mb-1">
-                                Read-Only Scope
+                                Read-Only Access
                             </h3>
                             <p className="text-xs sm:text-sm text-zinc-500">
-                                Zero write permissions required.
+                                We never need write access.
                             </p>
                         </div>
                     </Card>
@@ -126,14 +115,10 @@ export function Features() {
                                 <Globe className="w-5 h-5 text-orange-400" />
                             </div>
                             <h3 className="text-xl sm:text-2xl font-medium text-white mb-2">
-                                All Regions Scanned
+                                Every Region, Every Resource Type
                             </h3>
                             <p className="text-sm sm:text-base text-zinc-400 max-w-sm">
-                                Analyzes all 10 types of optimization
-                                opportunities across your entire DigitalOcean
-                                infrastructure. Identifies underutilized
-                                resources, zombie resources, consolidation
-                                opportunities, and more.
+                                11 checks across your whole account: zombie droplets, old snapshots, oversized databases, idle load balancers, and more. Nothing skipped.
                             </p>
                         </div>
                         {/* Map Abstract */}
@@ -149,12 +134,10 @@ export function Features() {
                                 <Activity className="w-5 h-5 text-pink-400" />
                             </div>
                             <h3 className="text-lg sm:text-xl font-medium text-white mb-1">
-                                Zombie Hunter
+                                Finds What's Bleeding Money
                             </h3>
                             <p className="text-xs sm:text-sm text-zinc-500">
-                                Detects powered-off droplets, unattached
-                                volumes, unused IPs, inactive load balancers,
-                                and old snapshots.
+                                Off droplets, orphan volumes, unused IPs, idle load balancers, forgotten snapshots.
                             </p>
                         </div>
                     </Card>

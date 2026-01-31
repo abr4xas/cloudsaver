@@ -24,7 +24,7 @@ function getOptionalEnvVar(key: string, defaultValue?: string): string | undefin
  * Get the site URL with fallback
  */
 export function getSiteUrl(): string {
-	return getEnvVar('NEXT_PUBLIC_SITE_URL', 'https://cloudsaver.io');
+	return getEnvVar('NEXT_PUBLIC_SITE_URL', 'https://do-cloudsaver.vercel.app');
 }
 
 /**

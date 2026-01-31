@@ -93,11 +93,11 @@ export function Hero() {
                     </div>
 
                     {/* Main Headline */}
-                    <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.1] sm:leading-[0.9] max-w-6xl mx-auto text-balance">
+                    <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.1] sm:leading-[0.9]  mx-auto text-balance">
                         <span className="block text-white mb-2">
-                            Find Hidden Savings
+                            Find Hidden Savings in Your DigitalOcean Account for
                         </span>
-                        <span className="block pb-4 min-h-[1.2em]">
+                        <span className="block pb-2 min-h-[1.1em]">
                             <span className="inline text-transparent bg-clip-text bg-linear-to-r from-emerald-400 via-teal-400 to-indigo-500 animate-gradient-x wrap-break-word hyphens-none">
                                 {currentText}
                             </span>
@@ -109,13 +109,11 @@ export function Hero() {
 
                     <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 max-w-4xl mx-auto leading-relaxed font-light px-4">
                         <span className="text-white font-medium">
-                            Get a comprehensive free analysis of your
-                            DigitalOcean infrastructure.
+                            Paste your DigitalOcean token. Get a free report in under 30 seconds.
                         </span>{" "}
-                        We automatically analyze all your resources and generate
-                        actionable recommendations to reduce costs.{" "}
+                        We scan droplets, volumes, snapshots, and more—then show you exactly where you can cut costs.{" "}
                         <span className="text-emerald-400 font-medium">
-                            Completely free. No credit card required.
+                            Free. No sign-up. No card.
                         </span>
                     </p>
 
@@ -127,7 +125,7 @@ export function Hero() {
                             onClick={scrollToAnalysis}
                         >
                             <span className="relative z-10 font-bold flex items-center gap-2">
-                                Start Free Audit
+                                See My Savings
                                 <ArrowRight
                                     className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                                     aria-hidden="true"
@@ -153,7 +151,7 @@ export function Hero() {
                                 aria-hidden="true"
                             />
                             <span className="text-xs sm:text-sm font-medium text-zinc-300">
-                                Results in 30s or less
+                                Report in under 30s
                             </span>
                         </div>
                         <div className="flex items-center gap-2 sm:gap-3">
@@ -162,7 +160,7 @@ export function Hero() {
                                 aria-hidden="true"
                             />
                             <span className="text-xs sm:text-sm font-medium text-zinc-300">
-                                Token Discarded After Use
+                                We never store your token
                             </span>
                         </div>
                     </div>

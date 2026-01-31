@@ -70,7 +70,7 @@ export function Navbar() {
                             onClick={() => scrollToSection("#token-input")}
                             className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-full px-6"
                         >
-                            Start Audit
+                            See My Savings
                         </Button>
                     </div>
 
@@ -113,7 +113,7 @@ export function Navbar() {
                             onClick={() => scrollToSection("#token-input")}
                             className="mt-2 bg-indigo-600 hover:bg-indigo-500 text-white"
                         >
-                            Start Audit
+                            See My Savings
                         </Button>
                     </div>
                 </div>

@@ -11,25 +11,25 @@ export function HowItWorks() {
         {
             id: "item-1",
             number: "01",
-            title: "Paste Read-Only Token",
+            title: "Paste Your Read-Only Token",
             description:
-                "Generate a read-only API token from your DigitalOcean dashboard. This ensures we can only view your resources—we can never modify, delete, or create anything in your account.",
+                "Create a read-only API token in your DigitalOcean dashboard. We can only read—we cannot change, delete, or create anything in your account.",
             icon: FileKey,
         },
         {
             id: "item-2",
             number: "02",
-            title: "Instant Analysis",
+            title: "We Scan, Then Forget the Token",
             description:
-                "We automatically analyze all your resources across all DigitalOcean regions—droplets, databases, volumes, snapshots, load balancers, IPs, and more. Your token is used once and immediately discarded. No storage, no logs—just comprehensive analysis and results in 30 seconds or less.",
+                "We pull droplets, databases, volumes, snapshots, load balancers, and IPs from every region. The token is used once and discarded. No storage, no logs. Results in under 30 seconds.",
             icon: Cog,
         },
         {
             id: "item-3",
             number: "03",
-            title: "Review Results",
+            title: "You Get a Report With Dollar Amounts",
             description:
-                "Get a complete report with recommendations for all 10 optimization types. Each recommendation includes a confidence level (High/Medium/Low), specific savings potential, and actionable steps. You decide what to implement. If your infrastructure is already optimized, you'll see a clean bill of health.",
+                "A full report with 11 optimization checks. Each item shows confidence (High/Medium/Low), how much you can save, and exact commands to fix it. You choose what to do. If everything looks good, you get a clean bill of health.",
             icon: PiggyBank,
         },
     ];
@@ -51,7 +51,7 @@ export function HowItWorks() {
                         <span className="text-zinc-500">Works</span>
                     </h2>
                     <p className="text-lg sm:text-xl text-zinc-400 max-w-md font-light leading-relaxed">
-                        A simple three-step process to get actionable recommendations for optimizing your DigitalOcean infrastructure. Get results in 30 seconds or less.
+                        Three steps. One token. A full report with dollar amounts and copy-paste commands—in under 30 seconds.
                     </p>
                 </div>
 
@@ -84,7 +84,7 @@ export function HowItWorks() {
                                         {step.description}
                                     </p>
                                     <div className="flex items-center gap-2 text-sm font-medium text-indigo-400 opacity-0 animate-fade-in group-data-[state=open]:opacity-100 transition-opacity">
-                                        Learn more{" "}
+                                        See your report{" "}
                                         <ArrowRight className="w-4 h-4" />
                                     </div>
                                 </AccordionContent>

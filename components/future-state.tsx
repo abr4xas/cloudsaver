@@ -8,36 +8,36 @@ export function FutureState() {
     const benefits = [
         {
             icon: TrendingDown,
-            title: "Optimized Infrastructure",
+            title: "Right-Sized Resources",
             description:
-                "Right-sized resources that match actual usage patterns, eliminating waste while maintaining performance.",
+                "Droplets and databases that match what you actually use. Less waste, same performance.",
             color: "text-emerald-400",
             bgColor: "bg-emerald-500/10",
             borderColor: "border-emerald-500/20",
         },
         {
             icon: CheckCircle2,
-            title: "Clean Resource State",
+            title: "No Zombies, No Orphans",
             description:
-                "No zombie droplets, unattached volumes, or inactive load balancers. Every resource serves a purpose.",
+                "Nothing on the bill that isn't doing work. Off droplets and unused volumes gone from the invoice.",
             color: "text-blue-400",
             bgColor: "bg-blue-500/10",
             borderColor: "border-blue-500/20",
         },
         {
             icon: Shield,
-            title: "Cost-Effective Operations",
+            title: "Budget You Can Reuse",
             description:
-                "Infrastructure costs aligned with actual needs, freeing budget for growth and innovation.",
+                "Money you were burning on idle resources goes back to things that matter—or stays in your pocket.",
             color: "text-indigo-400",
             bgColor: "bg-indigo-500/10",
             borderColor: "border-indigo-500/20",
         },
         {
             icon: Target,
-            title: "Continuous Optimization",
+            title: "Clear Picture of Spending",
             description:
-                "Ongoing visibility into infrastructure health, with actionable insights to prevent waste from accumulating.",
+                "You know what each resource costs and whether it's worth it. No more guessing where the bill went.",
             color: "text-violet-400",
             bgColor: "bg-violet-500/10",
             borderColor: "border-violet-500/20",
@@ -61,15 +61,13 @@ export function FutureState() {
                         Optimized State
                     </div>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-white leading-[1.1]">
-                        Where You <br />
+                        Same Reliability, <br />
                         <span className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 to-indigo-400">
-                            Could Be
+                            Lower Bill
                         </span>
                     </h2>
                     <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed font-light">
-                        An infrastructure that runs efficiently, with every resource serving a clear
-                        purpose. Costs aligned with actual needs, giving you visibility and control
-                        over your cloud spending.
+                        Every resource earns its place. You see where every dollar goes, and you keep what you need—nothing more.
                     </p>
                 </div>
 
@@ -114,8 +112,7 @@ export function FutureState() {
                     <div className="inline-flex items-center gap-2 text-emerald-400 text-sm font-medium">
                         <Zap className="w-4 h-4" />
                         <span>
-                            Achieve this state with clear, actionable recommendations tailored to your
-                            infrastructure
+                            Get a list of changes, with exact savings and copy-paste commands—you choose what to do.
                         </span>
                     </div>
                 </div>

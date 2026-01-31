@@ -17,9 +17,7 @@ export function Footer() {
                             </span>
                         </div>
                         <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xs">
-                            The open-source standard for DigitalOcean cost
-                            optimization. Secure API processing, banking-grade
-                            privacy, and instant results.
+                            Free tool to find savings in your DigitalOcean account. Read-only access, no storage, report in under 30 seconds.
                         </p>
                         <div className="flex gap-4">
                             <a

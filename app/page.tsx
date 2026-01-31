@@ -75,7 +75,7 @@ const AboutMe = dynamic(
 export const metadata: Metadata = {
     title: "Find Hidden Savings in Your DigitalOcean Infrastructure",
     description:
-        "Analyze your DigitalOcean account in 30 seconds or less. Identify wasted resources and potential savings instantly. No sign-up required. Privacy-first processing.",
+        "Paste your DigitalOcean token. Get a free report in under 30 seconds showing where you can cut costs. Read-only access, no sign-up, no card. 11 checks across droplets, volumes, snapshots, and more.",
     keywords: [
         "DigitalOcean",
         "cloud cost optimization",
@@ -87,14 +87,14 @@ export const metadata: Metadata = {
     openGraph: {
         title: "CloudSaver - Find Hidden Savings in Your DigitalOcean Infrastructure",
         description:
-            "Analyze your DigitalOcean account in 30 seconds. Identify wasted resources and potential savings instantly.",
+            "Free report in under 30 seconds. See where you're overpaying—droplets, volumes, snapshots, and more. Read-only, no sign-up.",
         type: "website",
     },
     twitter: {
         card: "summary_large_image",
         title: "CloudSaver - Find Hidden Savings in Your DigitalOcean Infrastructure",
         description:
-            "Analyze your DigitalOcean account in 30 seconds. Identify wasted resources and potential savings instantly.",
+            "Free report in under 30 seconds. See where you're overpaying—droplets, volumes, snapshots, and more. Read-only, no sign-up.",
     },
 };
 

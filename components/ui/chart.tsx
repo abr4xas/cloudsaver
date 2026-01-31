@@ -5,8 +5,8 @@ import * as RechartsPrimitive from "recharts";
 
 import { cn } from "@/lib/utils";
 
-// Format: { THEME_NAME: CSS_SELECTOR }
-const THEMES = { light: "", dark: ".dark" } as const;
+// Dark mode only
+const THEMES = { dark: "" } as const;
 
 type ValueType = number | string | ReadonlyArray<number | string>;
 type NameType = number | string;

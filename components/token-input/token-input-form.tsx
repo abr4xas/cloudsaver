@@ -89,13 +89,13 @@ export function TokenInputForm({
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") onAnalyze();
                             }}
-                            className="pl-12 pr-20 sm:pr-28 h-12 sm:h-14 bg-transparent border-0 text-white placeholder:text-zinc-600 font-mono text-sm sm:text-base focus-visible:ring-0 focus-visible:ring-offset-0 transition-all relative z-0"
+                            className="pl-10 sm:pl-12 pr-16 sm:pr-20 md:pr-28 h-11 sm:h-12 md:h-14 bg-transparent border-0 text-white placeholder:text-zinc-600 font-mono text-xs sm:text-sm md:text-base focus-visible:ring-0 focus-visible:ring-offset-0 transition-all relative z-0"
                             disabled={isAnalyzing}
                             spellCheck={false}
                             aria-invalid={isShaking}
                             aria-label="DigitalOcean API Token"
                         />
-                        <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10 px-2 sm:px-3 py-1 sm:py-1.5 bg-[#0A0A0A] border border-white/5 rounded text-[9px] sm:text-[10px] text-zinc-500 font-mono shadow-sm">
+                        <div className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 z-10 px-1.5 sm:px-2 md:px-3 py-0.5 sm:py-1 md:py-1.5 bg-[#0A0A0A] border border-white/5 rounded text-[8px] sm:text-[9px] md:text-[10px] text-zinc-500 font-mono shadow-sm">
                             READ-ONLY
                         </div>
                     </div>

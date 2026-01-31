@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "WebFetch(domain:ifdesign.com)"
+      "WebFetch(domain:ifdesign.com)",
+      "Bash(open http://localhost:3000)",
+      "Bash(grep:*)",
+      "Bash(for file in components/ui/*.tsx)",
+      "Bash(done)"
     ]
   }
 }

@@ -7,7 +7,6 @@ import Link from "next/link";
 import { Menu, X, Zap } from "lucide-react";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { useScrollToSection } from "@/hooks/use-scroll-to-section";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 const navLinks = [
     { label: "How It Works", href: "#how-it-works" },
@@ -63,9 +62,8 @@ export function Navbar() {
                         ))}
                     </div>
 
-                    {/* CTA Button & Theme Toggle */}
+                    {/* CTA Button */}
                     <div className="hidden md:flex items-center gap-3">
-                        <ThemeToggle />
                         <Button
                             onClick={() => scrollToSection("#token-input")}
                             className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-full px-6"
@@ -109,11 +107,10 @@ export function Navbar() {
                                 {link.label}
                             </button>
                         ))}
-                        <div className="mt-2 flex items-center gap-2">
-                            <ThemeToggle />
+                        <div className="mt-2">
                             <Button
                                 onClick={() => scrollToSection("#token-input")}
-                                className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white"
+                                className="w-full bg-indigo-600 hover:bg-indigo-500 text-white"
                             >
                                 See My Savings
                             </Button>

@@ -72,14 +72,14 @@ export function FutureState() {
                 </div>
 
                 {/* Benefits Grid - Clean 2x2 Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                     {benefits.map((benefit, index) => {
                         const Icon = benefit.icon;
                         return (
                             <Card
                                 key={index}
                                 className={cn(
-                                    "p-6 sm:p-8 border transition-all duration-300 group relative overflow-hidden",
+                                    "p-5 sm:p-6 md:p-8 border transition-all duration-300 group relative overflow-hidden",
                                     "hover:-translate-y-1 hover:shadow-xl",
                                     benefit.bgColor,
                                     benefit.borderColor,
@@ -89,15 +89,15 @@ export function FutureState() {
                                 {/* Subtle hover glow effect */}
                                 <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-emerald-500/3 to-transparent pointer-events-none" />
 
-                                <div className="space-y-4 relative z-10">
+                                <div className="space-y-3 sm:space-y-4 relative z-10">
                                     <div
                                         className={cn(
-                                            "w-12 h-12 rounded-lg flex items-center justify-center border transition-transform duration-300 group-hover:scale-110",
+                                            "w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center border transition-transform duration-300 group-hover:scale-110",
                                             benefit.bgColor,
                                             benefit.borderColor
                                         )}
                                     >
-                                        <Icon className={cn("w-6 h-6", benefit.color)} />
+                                        <Icon className={cn("w-5 h-5 sm:w-6 sm:h-6", benefit.color)} />
                                     </div>
                                     <h3 className="text-xl sm:text-2xl font-medium text-white">
                                         {benefit.title}

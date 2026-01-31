@@ -51,7 +51,6 @@ components/
   │   ├── token-input-form.tsx       # Input + modal with instructions
   │   └── analysis-progress.tsx      # Terminal-style progress UI
   ├── scroll-progress.tsx     # Scroll indicator + floating CTA
-  ├── theme-toggle.tsx        # Dark/light mode switcher
   ├── money-rain.tsx          # Celebration animation (optional)
   └── custom-cursor.tsx       # Custom cursor (optional, desktop only)
 
@@ -92,8 +91,7 @@ POST /api/analyze
 
 #### 2. Design System (OKLCH Color System)
 
-**Light Mode**: Off-white backgrounds (`oklch(0.98)`), near-black text (`oklch(0.15)`)
-**Dark Mode** (default): Deep space backgrounds (`oklch(0.05)`), white text (`oklch(0.98)`)
+**Dark Mode Only**: Deep space backgrounds (`oklch(0.05)`), white text (`oklch(0.98)`)
 
 **Gradient System** (contextual meaning):
 - `--gradient-hero`: Purple → Emerald (innovation)
@@ -147,12 +145,6 @@ POST /api/analyze
 - **Money rain**: Celebration effect (30 particles, 3s duration, respects motion preference)
 - **Scroll progress**: Bar changes color based on section (red → purple → emerald)
 - **All animations**: GPU-accelerated (transform/opacity only), 60fps target
-
-### Theme Toggle
-- System preference detection on mount
-- LocalStorage persistence
-- Smooth sun/moon icon morph (500ms rotate transition)
-- Full OKLCH palette swap
 
 ### Modal Design Pattern
 Used in token input instructions:

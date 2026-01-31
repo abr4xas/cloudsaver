@@ -65,9 +65,9 @@ export function FAQs() {
             id="faqs"
             className="py-20 sm:py-32 px-4 sm:px-6 relative overflow-hidden"
         >
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 items-start">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 md:gap-16 items-start">
                 {/* Left Column: Sticky Header */}
-                <div className="lg:sticky lg:top-32 space-y-6 sm:space-y-8 px-4 lg:px-0">
+                <div className="md:sticky md:top-32 space-y-4 sm:space-y-6 md:space-y-8 px-4 md:px-0">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono tracking-wider uppercase">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                         Questions
@@ -92,7 +92,7 @@ export function FAQs() {
                             <AccordionItem
                                 key={faq.id}
                                 value={faq.id}
-                                className="border border-white/5 bg-white/2 rounded-lg px-4 sm:px-6 transition-all data-[state=open]:border-emerald-500/20 data-[state=open]:bg-emerald-500/3"
+                                className="border border-white/5 bg-white/2 rounded-lg px-4 sm:px-5 md:px-6 transition-all data-[state=open]:border-emerald-500/20 data-[state=open]:bg-emerald-500/3"
                             >
                                 <AccordionTrigger className="hover:no-underline py-4 sm:py-6 group">
                                     <div className="flex items-start gap-4 sm:gap-6 text-left w-full">
@@ -104,7 +104,7 @@ export function FAQs() {
                                         </span>
                                     </div>
                                 </AccordionTrigger>
-                                <AccordionContent className="pb-4 sm:pb-6 pl-0 sm:pl-16">
+                                <AccordionContent className="pb-4 sm:pb-6 pl-0 sm:pl-12 md:pl-16">
                                     <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
                                         {faq.answer}
                                     </p>

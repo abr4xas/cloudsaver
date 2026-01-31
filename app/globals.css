@@ -1,8 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
     /* Deep space background base */
     --background: oklch(0.05 0.02 280);
@@ -54,64 +52,11 @@
     --sidebar-accent-foreground: oklch(0.98 0 0);
     --sidebar-border: oklch(0.3 0.05 280 / 0.2);
     --sidebar-ring: oklch(0.65 0.25 280);
-}
 
-/* ========================================
-   LIGHT MODE THEME
-   ======================================== */
-.light {
-    /* Light mode background base */
-    --background: oklch(0.98 0.01 280);
-    --foreground: oklch(0.15 0.02 280);
-
-    /* Light cards with subtle warmth */
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.15 0.02 280);
-
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.15 0.02 280);
-
-    /* Primary stays vibrant */
-    --primary: oklch(0.60 0.25 280);
-    --primary-foreground: oklch(0.98 0 0);
-
-    /* Secondary adjusted for light */
-    --secondary: oklch(0.60 0.2 250);
-    --secondary-foreground: oklch(0.98 0 0);
-
-    --muted: oklch(0.95 0.01 280);
-    --muted-foreground: oklch(0.45 0.02 280);
-
-    /* Accent adjusted for light */
-    --accent: oklch(0.70 0.18 150);
-    --accent-foreground: oklch(0.98 0 0);
-
-    --destructive: oklch(0.577 0.245 27.325);
-    --destructive-foreground: oklch(0.98 0 0);
-
-    --border: oklch(0.85 0.02 280);
-    --input: oklch(0.90 0.01 280);
-    --ring: oklch(0.60 0.25 280);
-
-    /* Chart Colors for Light Mode */
-    --chart-1: oklch(0.60 0.25 280);
-    --chart-2: oklch(0.60 0.2 250);
-    --chart-3: oklch(0.70 0.18 150);
-    --chart-4: oklch(0.75 0.2 60);
-    --chart-5: oklch(0.65 0.25 320);
-
-    --sidebar: oklch(0.97 0.01 280);
-    --sidebar-foreground: oklch(0.15 0.02 280);
-    --sidebar-primary: oklch(0.60 0.25 280);
-    --sidebar-primary-foreground: oklch(0.98 0 0);
-    --sidebar-accent: oklch(0.93 0.02 280);
-    --sidebar-accent-foreground: oklch(0.15 0.02 280);
-    --sidebar-border: oklch(0.85 0.02 280);
-    --sidebar-ring: oklch(0.60 0.25 280);
-}
-
-:root {
-    /* Sophisticated Gradient System - iF Design Award Standards */
+    /* ========================================
+       SOPHISTICATED GRADIENT SYSTEM
+       iF Design Award Standards
+       ======================================== */
 
     /* Hero Gradient: Purple → Emerald (Innovation & Growth) */
     --gradient-hero: linear-gradient(135deg,

@@ -1,3 +1,5 @@
+import { withBotId } from 'botid/next/config';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     typescript: {
@@ -13,13 +15,10 @@ const nextConfig = {
     },
     // Optimize package imports to reduce bundle size
     experimental: {
-        optimizePackageImports: ["lucide-react", "recharts", "@radix-ui/react-accordion", "@radix-ui/react-dialog"],
-        after: true,
+        optimizePackageImports: ["lucide-react", "recharts", "@radix-ui/react-accordion", "@radix-ui/react-dialog", "botid"],
     },
     // Enable compression
     compress: true,
-    // Font optimization
-    optimizeFonts: true,
     // Reduce build output
     productionBrowserSourceMaps: false,
     // Security headers
@@ -62,4 +61,4 @@ const nextConfig = {
     poweredByHeader: false,
 };
 
-export default nextConfig;
+export default withBotId(nextConfig);

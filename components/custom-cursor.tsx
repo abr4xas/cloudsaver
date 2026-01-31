@@ -25,13 +25,14 @@ export function CustomCursor() {
 
             // Check if hovering over interactive element
             const target = e.target as HTMLElement;
-            const isInteractive =
+            const isInteractive = !!(
                 target.tagName === "A" ||
                 target.tagName === "BUTTON" ||
                 target.closest("button") ||
                 target.closest("a") ||
                 target.classList.contains("cursor-pointer") ||
-                window.getComputedStyle(target).cursor === "pointer";
+                window.getComputedStyle(target).cursor === "pointer"
+            );
 
             setIsPointer(isInteractive);
         };

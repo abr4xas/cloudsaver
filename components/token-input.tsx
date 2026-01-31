@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { useAnalysis } from "@/hooks/use-analysis";
 import { useAnalysisSteps } from "@/hooks/use-analysis-steps";
-import { TokenInputForm } from "./token-input/token-input-form";
+import { TokenInputForm, type TokenInputState } from "./token-input/token-input-form";
 import { AnalysisProgress } from "./token-input/analysis-progress";
 import { CleanBillCard } from "./token-input/clean-bill-card";
 import { Results } from "./results";
@@ -19,8 +19,6 @@ export function TokenInput({
     onAnalysisComplete,
     _showPremiumCta = true,
 }: TokenInputProps) {
-    const [isFocused, setIsFocused] = useState(false);
-
     const {
         token,
         setToken,
@@ -32,6 +30,21 @@ export function TokenInput({
         analyze,
         reset,
     } = useAnalysis({ onAnalysisComplete });
+
+    // Derive TokenInputState from analysis hook state
+    const [isFocused, setIsFocused] = useState(false);
+
+    const inputState: TokenInputState = isAnalyzing
+        ? { status: "analyzing" }
+        : isShaking
+          ? { status: "error", message: "Token is required to proceed." }
+          : isFocused
+            ? { status: "focused" }
+            : { status: "idle" };
+
+    // Stable callbacks for focus handlers to prevent re-renders
+    const handleFocus = useCallback(() => setIsFocused(true), []);
+    const handleBlur = useCallback(() => setIsFocused(false), []);
 
     const { analysisStep, completedSteps, steps, startAnimation, completeAll } =
         useAnalysisSteps({
@@ -58,7 +71,9 @@ export function TokenInput({
             <div
                 className={cn(
                     "fixed inset-0 bg-black/60 backdrop-blur-[2px] pointer-events-none transition-opacity duration-500 z-0",
-                    isFocused || isAnalyzing ? "opacity-100" : "opacity-0",
+                    (inputState.status === "focused" || inputState.status === "analyzing")
+                        ? "opacity-100"
+                        : "opacity-0",
                 )}
             />
 
@@ -70,10 +85,9 @@ export function TokenInput({
                             token={token}
                             onTokenChange={setToken}
                             onAnalyze={handleAnalyze}
-                            isAnalyzing={isAnalyzing}
-                            isShaking={isShaking}
-                            isFocused={isFocused}
-                            onFocusChange={setIsFocused}
+                            state={inputState}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}
                         />
                     )}
 

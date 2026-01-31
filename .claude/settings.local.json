@@ -6,7 +6,11 @@
       "Bash(open http://localhost:3000)",
       "Bash(grep:*)",
       "Bash(for file in components/ui/*.tsx)",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm run build:*)",
+      "Bash(pnpm list:*)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }

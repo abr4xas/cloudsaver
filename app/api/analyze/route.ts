@@ -1,4 +1,5 @@
 import { NextResponse, after } from "next/server";
+import { checkBotId } from "botid/server";
 import { DigitalOceanService } from "@/lib/services/digitalocean/digitalocean-service";
 import { PricingService } from "@/lib/services/pricing/pricing-service";
 import { RecommendationEngine } from "@/lib/services/analysis/recommendation-engine";
@@ -86,6 +87,24 @@ async function analyzeAccount(token: string) {
  */
 async function handleAnalyze(request: Request): Promise<Response> {
 	try {
+		// Check for bot traffic using Vercel BotID
+		const verification = await checkBotId();
+
+		if (verification.isBot) {
+			return NextResponse.json(
+				{
+					error: "Bot detected. Access denied.",
+					code: "BOT_DETECTED",
+				},
+				{
+					status: 403,
+					headers: {
+						"Cache-Control": "no-store",
+					},
+				}
+			);
+		}
+
 		const token = request.headers.get("X-DOP-Token");
 
 		if (!token) {

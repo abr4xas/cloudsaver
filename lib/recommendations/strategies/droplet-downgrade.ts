@@ -1,5 +1,6 @@
-import { Analyzer, Recommendation, ResourceData, ConfidenceLevel, DropletMetrics } from '../types';
-import { DROPLET_PRICING, savingsCalculator } from '../../savings-calculator';
+import type { Analyzer, Recommendation, ConfidenceLevel, DropletMetrics } from '../types';
+import type { ResourceData, DigitalOceanDroplet } from '@/lib/types/analyzer';
+import { PricingService } from '@/lib/services/pricing/pricing-service';
 
 /**
  * Downgrade table: maps current size to next smaller size
@@ -13,33 +14,32 @@ const DOWNGRADE_MAP: Record<string, string> = {
 	's-1vcpu-1gb': 's-1vcpu-512mb-10gb',
 };
 
-interface DropletWithMetrics {
-	id: string | number;
-	name: string;
-	status: string;
-	size: { slug: string } | string;
-	metrics: DropletMetrics;
+interface DropletWithMetrics extends DigitalOceanDroplet {
+	metrics?: DropletMetrics;
 }
 
 export class DropletDowngradeAnalyzer implements Analyzer {
+	private pricingService: PricingService;
+
+	constructor() {
+		this.pricingService = PricingService.getInstance();
+	}
+
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 
-		for (const d of data.droplets) {
-			const droplet = d as DropletWithMetrics;
+		for (const droplet of data.droplets as DropletWithMetrics[]) {
 			// Skip if no metrics available or droplet is not active
 			if (!droplet.metrics || droplet.status !== "active") {
 				continue;
 			}
 
 			const metrics: DropletMetrics = droplet.metrics;
-			const size =
-				typeof droplet.size === "object"
-					? droplet.size.slug
-					: droplet.size;
+			const size = droplet.size?.slug || "";
 
 			// Skip if not a basic droplet or smallest tier
-			if (!DROPLET_PRICING[size] || size === "s-1vcpu-512mb-10gb") {
+			const currentPrice = this.pricingService.getDropletPrice(size);
+			if (!currentPrice || size === "s-1vcpu-512mb-10gb") {
 				continue;
 			}
 
@@ -81,10 +81,9 @@ export class DropletDowngradeAnalyzer implements Analyzer {
 		}
 
 		// Calculate savings
-		const monthlySavings = savingsCalculator.calculateMonthlySavings(
-			currentSize,
-			suggestedSize
-		);
+		const currentPrice = this.pricingService.getDropletPrice(currentSize);
+		const suggestedPrice = this.pricingService.getDropletPrice(suggestedSize);
+		const monthlySavings = currentPrice - suggestedPrice;
 
 		if (monthlySavings <= 0) {
 			return null;

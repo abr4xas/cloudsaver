@@ -14,6 +14,7 @@ import { PricingService } from '../pricing/pricing-service';
 import type { AnalysisResult, Recommendation, ResourceData } from '../types/analysis';
 import type { Recommendation as LegacyRecommendation } from '../../recommendations/types';
 import type { Analyzer } from '../../recommendations/types';
+import { roundCurrency } from '@/lib/utils/currency';
 
 export interface RecommendationEngineConfig {
 	digitalOceanService: DigitalOceanService;
@@ -64,12 +65,12 @@ export class RecommendationEngine {
 
 		// Convert to ResourceData format expected by analyzers
 		const resourceData: ResourceData = {
-			droplets: resources.droplets,
-			volumes: resources.volumes,
-			snapshots: resources.snapshots,
-			databases: resources.databases,
-			reserved_ips: resources.reserved_ips,
-			load_balancers: resources.load_balancers,
+			droplets: resources.droplets as any,
+			volumes: resources.volumes as any,
+			snapshots: resources.snapshots as any,
+			databases: resources.databases as any,
+			reservedIPs: resources.reserved_ips as any,
+			loadBalancers: resources.load_balancers as any,
 		};
 
 		// Run all analyzers in parallel
@@ -102,8 +103,8 @@ export class RecommendationEngine {
 		}
 
 		return {
-			monthlyCost: this.roundCurrency(monthlyCost),
-			potentialSavings: this.roundCurrency(totalSavings),
+			monthlyCost: roundCurrency(monthlyCost),
+			potentialSavings: roundCurrency(totalSavings),
 			savingsPercentage,
 			resourcesFound: this.countResources(resourceData),
 			opportunities: opportunitiesCount,
@@ -199,7 +200,7 @@ export class RecommendationEngine {
 				subtype: `grouped_${subtype}`,
 				title,
 				description,
-				savings: this.roundCurrency(totalSavings),
+				savings: roundCurrency(totalSavings),
 				confidence: groupConfidence,
 				impact: group[0].impact || 'Medium',
 				data: {
@@ -208,7 +209,7 @@ export class RecommendationEngine {
 						subtype: r.subtype,
 						title: r.title,
 						resourceName: r.resourceName,
-						savings: this.roundCurrency(r.savings),
+						savings: roundCurrency(r.savings),
 						confidence: r.confidence,
 						warnings: r.warnings || [],
 						description: r.description || '',
@@ -273,7 +274,7 @@ export class RecommendationEngine {
 		}, 0);
 
 		// Calculate database costs
-		const databaseCost = data.databases.reduce((sum: number, database) => {
+		const databaseCost = (data.databases || []).reduce((sum: number, database) => {
 			const size = (database as { size?: string }).size || '';
 			return sum + this.pricingService.getDatabasePrice(size);
 		}, 0);
@@ -305,7 +306,7 @@ export class RecommendationEngine {
 		}, 0);
 
 		// Calculate load balancer costs
-		const loadBalancerCost = data.load_balancers.reduce((sum: number, lb) => {
+		const loadBalancerCost = (data.loadBalancers || []).reduce((sum: number, lb) => {
 			const lbType =
 				(lb as { type?: string }).type === 'REGIONAL_NETWORK'
 					? 'network'
@@ -314,7 +315,7 @@ export class RecommendationEngine {
 		}, 0);
 
 		// Calculate reserved IP costs (only unassigned IPs)
-		const reservedIpCost = data.reserved_ips
+		const reservedIpCost = (data.reservedIPs || [])
 			.filter(
 				(ip) =>
 					!(ip as { droplet?: unknown }).droplet ||
@@ -332,7 +333,7 @@ export class RecommendationEngine {
 			loadBalancerCost +
 			reservedIpCost;
 
-		return this.roundCurrency(totalCost);
+		return roundCurrency(totalCost);
 	}
 
 	/**
@@ -345,9 +346,9 @@ export class RecommendationEngine {
 			data.droplets.length +
 			data.volumes.length +
 			data.snapshots.length +
-			data.databases.length +
-			data.reserved_ips.length +
-			data.load_balancers.length
+			(data.databases?.length || 0) +
+			(data.reservedIPs?.length || 0) +
+			(data.loadBalancers?.length || 0)
 		);
 	}
 
@@ -370,12 +371,4 @@ export class RecommendationEngine {
 		return count;
 	}
 
-	/**
-	 * Round currency to 2 decimal places
-	 *
-	 * @private
-	 */
-	private roundCurrency(value: number): number {
-		return Math.round(value * 100) / 100;
-	}
 }

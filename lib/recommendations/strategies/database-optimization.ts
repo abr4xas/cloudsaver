@@ -1,5 +1,6 @@
-import { Analyzer, Recommendation, ResourceData, ConfidenceLevel } from '../types';
-import { DATABASE_PRICING, savingsCalculator } from '../../savings-calculator';
+import type { Analyzer, Recommendation, ConfidenceLevel } from '../types';
+import type { ResourceData, DigitalOceanDatabase } from '@/lib/types/analyzer';
+import { PricingService } from '@/lib/services/pricing/pricing-service';
 
 /**
  * Database downgrade map: maps current size to next smaller size
@@ -17,15 +18,17 @@ interface DatabaseMetrics {
 	periodDays: number;
 }
 
-interface DBWithMetrics {
-	id: string | number;
-	name: string;
-	size: string;
-	engine: string;
-	metrics: DatabaseMetrics;
+interface DBWithMetrics extends DigitalOceanDatabase {
+	metrics?: DatabaseMetrics;
 }
 
 export class DatabaseOptimizationAnalyzer implements Analyzer {
+	private pricingService: PricingService;
+
+	constructor() {
+		this.pricingService = PricingService.getInstance();
+	}
+
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 
@@ -34,8 +37,7 @@ export class DatabaseOptimizationAnalyzer implements Analyzer {
 			return recommendations;
 		}
 
-		for (const d of data.databases) {
-			const database = d as DBWithMetrics;
+		for (const database of data.databases as DBWithMetrics[]) {
 			// Skip if no metrics available
 			if (!database.metrics) {
 				continue;
@@ -45,7 +47,8 @@ export class DatabaseOptimizationAnalyzer implements Analyzer {
 			const size = database.size;
 
 			// Skip if not a known pricing size
-			if (!DATABASE_PRICING[size]) {
+			const currentPrice = size ? this.pricingService.getDatabasePrice(size) : 0;
+			if (!size || !currentPrice) {
 				continue;
 			}
 
@@ -73,7 +76,7 @@ export class DatabaseOptimizationAnalyzer implements Analyzer {
 		database: DBWithMetrics,
 		metrics: DatabaseMetrics
 	): Recommendation {
-		const monthlyCost = DATABASE_PRICING[database.size] || 0;
+		const monthlyCost = database.size ? this.pricingService.getDatabasePrice(database.size) : 0;
 
 		return {
 			type: "database",
@@ -117,10 +120,9 @@ export class DatabaseOptimizationAnalyzer implements Analyzer {
 		}
 
 		// Calculate savings
-		const monthlySavings = savingsCalculator.calculateMonthlySavings(
-			currentSize,
-			suggestedSize
-		);
+		const currentPrice = this.pricingService.getDatabasePrice(currentSize);
+		const suggestedPrice = this.pricingService.getDatabasePrice(suggestedSize);
+		const monthlySavings = currentPrice - suggestedPrice;
 
 		if (monthlySavings <= 0) {
 			return null;

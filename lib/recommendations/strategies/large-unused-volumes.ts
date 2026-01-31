@@ -1,18 +1,6 @@
-import { Analyzer, Recommendation, ResourceData } from "../types";
+import type { Analyzer, Recommendation } from "../types";
+import type { ResourceData, DigitalOceanVolume, DigitalOceanDroplet } from "@/lib/types/analyzer";
 import { PricingService } from "../../services/pricing/pricing-service";
-
-interface Volume {
-	id: string;
-	name: string;
-	size_gigabytes: number;
-	droplet_ids?: number[] | string[];
-}
-
-interface Droplet {
-	id: string | number;
-	name: string;
-	status: string;
-}
 
 /**
  * Large Unused Volumes Analyzer
@@ -41,14 +29,12 @@ export class LargeUnusedVolumesAnalyzer implements Analyzer {
 		}
 
 		// Create a map of droplets by ID for quick lookup
-		const dropletMap = new Map<string | number, Droplet>();
-		(data.droplets as unknown[]).forEach((d) => {
-			const droplet = d as Droplet;
+		const dropletMap = new Map<string | number, DigitalOceanDroplet>();
+		data.droplets.forEach((droplet) => {
 			dropletMap.set(droplet.id, droplet);
 		});
 
-		(data.volumes as unknown[]).forEach((v) => {
-			const volume = v as Volume;
+		data.volumes.forEach((volume) => {
 			const sizeGB = volume.size_gigabytes || 0;
 
 			// Skip small volumes
@@ -61,7 +47,7 @@ export class LargeUnusedVolumesAnalyzer implements Analyzer {
 
 			// Case 1: Volume attached to powered-off droplets
 			if (dropletIds.length > 0) {
-				const attachedDroplets: Droplet[] = [];
+				const attachedDroplets: DigitalOceanDroplet[] = [];
 				let hasOffDroplet = false;
 
 				for (const dropletId of dropletIds) {

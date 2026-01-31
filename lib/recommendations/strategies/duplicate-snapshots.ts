@@ -1,15 +1,6 @@
-import { Analyzer, Recommendation, ResourceData } from "../types";
+import type { Analyzer, Recommendation } from "../types";
+import type { ResourceData, DigitalOceanSnapshot } from "@/lib/types/analyzer";
 import { PricingService } from "../../services/pricing/pricing-service";
-
-interface Snapshot {
-	id: string;
-	name: string;
-	resource_id?: string | number;
-	resource_type?: string;
-	created_at?: string;
-	min_disk_size_gb?: number;
-	min_disk_size?: number;
-}
 
 /**
  * Duplicate Snapshots Analyzer
@@ -38,10 +29,9 @@ export class DuplicateSnapshotsAnalyzer implements Analyzer {
 		}
 
 		// Group snapshots by resource_id + resource_type
-		const snapshotGroups = new Map<string, Snapshot[]>();
+		const snapshotGroups = new Map<string, DigitalOceanSnapshot[]>();
 
-		(data.snapshots as unknown[]).forEach((snapshot) => {
-			const snap = snapshot as Snapshot;
+		data.snapshots.forEach((snap) => {
 			const resourceId = String(snap.resource_id || '');
 			const resourceType = snap.resource_type || 'unknown';
 			const groupKey = `${resourceType}:${resourceId}`;
@@ -66,7 +56,7 @@ export class DuplicateSnapshotsAnalyzer implements Analyzer {
 			});
 
 			// Find snapshots created within the duplicate window
-			const duplicates: Snapshot[] = [];
+			const duplicates: DigitalOceanSnapshot[] = [];
 			const newest = snapshots[0];
 			const newestDate = newest.created_at ? new Date(newest.created_at).getTime() : 0;
 
@@ -86,7 +76,7 @@ export class DuplicateSnapshotsAnalyzer implements Analyzer {
 				const duplicateNames: string[] = [];
 
 				for (const duplicate of duplicates) {
-					const minDiskSize = duplicate.min_disk_size_gb || duplicate.min_disk_size || 0;
+					const minDiskSize = (duplicate as any).min_disk_size_gb || duplicate.min_disk_size || 0;
 					const cost = this.pricingService.calculateSnapshotCost(minDiskSize);
 					totalSavings += cost;
 					duplicateNames.push(duplicate.name || duplicate.id);

@@ -30,14 +30,9 @@ export interface Recommendation {
 	};
 }
 
-export interface ResourceData {
-	droplets: unknown[];
-	volumes: unknown[];
-	snapshots: unknown[];
-	databases?: unknown[];
-	load_balancers?: unknown[];
-	reserved_ips?: unknown[];
-}
+// Re-export typed ResourceData from analyzer types
+import type { ResourceData } from '@/lib/types/analyzer';
+export type { ResourceData };
 
 export interface Analyzer {
 	analyze(data: ResourceData): Promise<Recommendation[]>;

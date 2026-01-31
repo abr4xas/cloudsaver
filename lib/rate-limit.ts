@@ -5,6 +5,8 @@
  * Uses LRU cache to limit memory usage
  */
 
+import { RATE_LIMIT_CONFIG, getRateLimitConfigFromEnv } from '@/lib/config/rate-limit';
+
 interface RateLimitEntry {
   count: number;
   resetAt: number;
@@ -131,11 +133,12 @@ class RateLimiter {
 // Singleton instance - Very permissive server-side rate limit (backup only)
 // Primary rate limiting is done client-side with localStorage
 // This is just a safety net for server-side validation
-// Max 10,000 entries to prevent memory issues
+// Max entries to prevent memory issues
+const envConfig = getRateLimitConfigFromEnv();
 const rateLimiter = new RateLimiter(
-  parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || "100", 10), // Much higher limit
-  parseInt(process.env.RATE_LIMIT_WINDOW_MS || "60000", 10),
-  10000 // Max entries
+  envConfig.maxRequests,
+  envConfig.windowMs,
+  RATE_LIMIT_CONFIG.SERVER_MAX_ENTRIES
 );
 
 /**

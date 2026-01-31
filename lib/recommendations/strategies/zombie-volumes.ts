@@ -1,11 +1,5 @@
-import { Analyzer, Recommendation, ResourceData } from "../types";
-
-interface Volume {
-	id: string;
-	name: string;
-	droplet_ids: string[];
-	size_gigabytes: number;
-}
+import type { Analyzer, Recommendation } from "../types";
+import type { ResourceData, DigitalOceanVolume } from "@/lib/types/analyzer";
 
 export class ZombieVolumesAnalyzer implements Analyzer {
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
@@ -13,8 +7,7 @@ export class ZombieVolumesAnalyzer implements Analyzer {
 
 		// Check for unattached volumes
 		// In DigitalOcean API, volumes attached to droplets have 'droplet_ids' array populated
-		(data.volumes as unknown[]).forEach((v) => {
-			const volume = v as Volume;
+		data.volumes.forEach((volume) => {
 			if (!volume.droplet_ids || volume.droplet_ids.length === 0) {
 				// Simple logic: if not attached, it's a zombie.
 				// In a real scenario we might check 'detached_at' timestamp if available,

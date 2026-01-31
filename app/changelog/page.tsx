@@ -32,6 +32,36 @@ export const metadata: Metadata = {
 
 const changelogEntries = [
     {
+        version: "v0.1.2",
+        date: "January 2026",
+        type: "current",
+        icon: Zap,
+        changes: [
+            {
+                category: "Social Sharing",
+                items: [
+                    "New professional Open Graph image for richer previews when sharing on social media",
+                    "Matching Twitter card image for consistent sharing across platforms",
+                ],
+            },
+            {
+                category: "Improved Cost Accuracy",
+                items: [
+                    "All 11 analyzers now use the same comprehensive pricing source for consistent results",
+                    "Eliminated discrepancies between different cost calculations",
+                ],
+            },
+            {
+                category: "Performance & Stability",
+                items: [
+                    "Faster analysis through optimized internal data processing",
+                    "Improved memory usage and resource cleanup",
+                    "More reliable rate limiting across client and server",
+                ],
+            },
+        ],
+    },
+    {
         version: "v0.1.1",
         date: "January 2026",
         type: "current",

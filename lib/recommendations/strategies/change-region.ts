@@ -1,4 +1,5 @@
-import { Analyzer, Recommendation, ResourceData, ConfidenceLevel } from '../types';
+import type { Analyzer, Recommendation, ConfidenceLevel } from '../types';
+import type { ResourceData, DigitalOceanDroplet } from '@/lib/types/analyzer';
 
 /**
  * Estimated latencies between regions (in ms)
@@ -17,11 +18,7 @@ const REGION_LATENCIES: Record<string, Record<string, number>> = {
 	'syd1': { 'nyc1': 220, 'nyc3': 220, 'sfo3': 140, 'ams3': 280, 'sgp1': 100, 'lon1': 290, 'fra1': 285, 'tor1': 200, 'blr1': 110, 'syd1': 0 },
 };
 
-interface DropletWithTraffic {
-	id: string | number;
-	name: string;
-	status: string;
-	region?: { slug: string } | string;
+interface DropletWithTraffic extends DigitalOceanDroplet {
 	trafficAnalysis?: {
 		primarySourceRegion: string;
 		trafficPercentage: number;

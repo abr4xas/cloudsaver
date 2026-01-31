@@ -30,7 +30,7 @@ export interface Analyzer {
  * DigitalOcean resource types (simplified)
  */
 export interface DigitalOceanDroplet {
-    id: number;
+    id: number | string;
     name: string;
     status: string;
     created_at: string;

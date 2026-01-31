@@ -1,22 +1,13 @@
-import { Analyzer, Recommendation, ResourceData } from "../types";
-
-interface Droplet {
-	id: string;
-	name: string;
-	status: string;
-	size: {
-		price_monthly: number;
-	};
-}
+import type { Analyzer, Recommendation } from "../types";
+import type { ResourceData, DigitalOceanDroplet } from "@/lib/types/analyzer";
 
 export class ZombieDropletsAnalyzer implements Analyzer {
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 
-		(data.droplets as unknown[]).forEach((d) => {
-			const droplet = d as Droplet;
+		data.droplets.forEach((droplet) => {
 			if (droplet.status === 'off') {
-				const monthlyCost = droplet.size.price_monthly;
+				const monthlyCost = droplet.size?.price_monthly || 0;
 
 				recommendations.push({
 					type: 'droplet',
@@ -26,7 +17,7 @@ export class ZombieDropletsAnalyzer implements Analyzer {
 					savings: monthlyCost,
 					confidence: 'High',
 					impact: 'Low', // If it's off, it's likely not critical right now
-					resourceId: droplet.id,
+					resourceId: String(droplet.id),
 					resourceName: droplet.name,
 				});
 			}

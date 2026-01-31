@@ -1,13 +1,6 @@
-import { Analyzer, Recommendation, ResourceData } from "../types";
+import type { Analyzer, Recommendation } from "../types";
+import type { ResourceData, DigitalOceanLoadBalancer } from "@/lib/types/analyzer";
 import { PricingService } from "../../services/pricing/pricing-service";
-
-interface LoadBalancer {
-	id: string;
-	name: string;
-	type?: string;
-	droplet_ids?: number[];
-	status?: string;
-}
 
 /**
  * Idle Load Balancers Analyzer
@@ -30,14 +23,13 @@ export class IdleLoadBalancersAnalyzer implements Analyzer {
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 
-		if (!data.load_balancers || data.load_balancers.length === 0) {
+		if (!data.loadBalancers || data.loadBalancers.length === 0) {
 			return recommendations;
 		}
 
-		(data.load_balancers as unknown[]).forEach((lb) => {
-			const loadBalancer = lb as LoadBalancer;
-			const dropletIds = loadBalancer.droplet_ids || [];
-			const lbType = loadBalancer.type === 'REGIONAL_NETWORK' ? 'network' : 'http';
+		data.loadBalancers.forEach((loadBalancer) => {
+			const dropletIds = (loadBalancer as any).droplet_ids || [];
+			const lbType = (loadBalancer as any).type === 'REGIONAL_NETWORK' ? 'network' : 'http';
 			const monthlyCost = this.pricingService.getLoadBalancerPrice(lbType);
 
 			// Case 1: Empty load balancer (no droplets attached)

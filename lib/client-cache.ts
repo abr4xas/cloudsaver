@@ -3,6 +3,12 @@
  * Useful for caching non-sensitive data like pricing, sizes, etc.
  */
 
+import {
+  getLocalStorageJSON,
+  setLocalStorageJSON,
+  removeLocalStorageItem,
+} from '@/lib/utils/storage';
+
 interface CacheEntry<T> {
   data: T;
   timestamp: number;
@@ -31,29 +37,18 @@ export const CLIENT_CACHE_TTL = {
  * Get cached value from localStorage
  */
 export function getClientCache<T>(key: string): T | null {
-  if (typeof window === "undefined" || !window.localStorage) {
+  const entry = getLocalStorageJSON<CacheEntry<T>>(key);
+  if (!entry) return null;
+
+  const now = Date.now();
+
+  // Check if expired
+  if (now > entry.expiresAt) {
+    removeLocalStorageItem(key);
     return null;
   }
 
-  try {
-    const stored = window.localStorage.getItem(key);
-    if (!stored) return null;
-
-    const entry = JSON.parse(stored) as CacheEntry<T>;
-    const now = Date.now();
-
-    // Check if expired
-    if (now > entry.expiresAt) {
-      window.localStorage.removeItem(key);
-      return null;
-    }
-
-    return entry.data;
-  } catch {
-    // Invalid data, clear it
-    window.localStorage.removeItem(key);
-    return null;
-  }
+  return entry.data;
 }
 
 /**
@@ -64,32 +59,21 @@ export function setClientCache<T>(
   data: T,
   ttlMs: number = CLIENT_CACHE_TTL.PRICING
 ): void {
-  if (typeof window === "undefined" || !window.localStorage) {
-    return;
-  }
+  const now = Date.now();
+  const entry: CacheEntry<T> = {
+    data,
+    timestamp: now,
+    expiresAt: now + ttlMs,
+  };
 
-  try {
-    const now = Date.now();
-    const entry: CacheEntry<T> = {
-      data,
-      timestamp: now,
-      expiresAt: now + ttlMs,
-    };
-
-    window.localStorage.setItem(key, JSON.stringify(entry));
-  } catch (error) {
-    // localStorage might be full or disabled, ignore
-    console.warn(`Failed to save cache to localStorage (key: ${key}):`, error);
-  }
+  setLocalStorageJSON(key, entry);
 }
 
 /**
  * Delete cache entry
  */
 export function deleteClientCache(key: string): void {
-  if (typeof window !== "undefined" && window.localStorage) {
-    window.localStorage.removeItem(key);
-  }
+  removeLocalStorageItem(key);
 }
 
 /**

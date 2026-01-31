@@ -1,5 +1,6 @@
-import { Analyzer, Recommendation, ResourceData } from '../types';
-import { DROPLET_PRICING } from '../../savings-calculator';
+import type { Analyzer, Recommendation } from '../types';
+import type { ResourceData, DigitalOceanDroplet } from '@/lib/types/analyzer';
+import { PricingService } from '@/lib/services/pricing/pricing-service';
 
 /**
  * Eligible small droplet sizes for consolidation
@@ -42,6 +43,12 @@ interface ConsolidationCandidate {
  * that could be consolidated into a single larger droplet.
  */
 export class ConsolidateDropletsAnalyzer implements Analyzer {
+	private pricingService: PricingService;
+
+	constructor() {
+		this.pricingService = PricingService.getInstance();
+	}
+
 	async analyze(data: ResourceData): Promise<Recommendation[]> {
 		const recommendations: Recommendation[] = [];
 
@@ -67,23 +74,11 @@ export class ConsolidateDropletsAnalyzer implements Analyzer {
 		return recommendations;
 	}
 
-	private filterCandidates(droplets: unknown[]): ConsolidationCandidate[] {
+	private filterCandidates(droplets: DigitalOceanDroplet[]): ConsolidationCandidate[] {
 		const candidates: ConsolidationCandidate[] = [];
 
-		for (const d of droplets) {
-			const droplet = d as {
-				id: string | number;
-				name: string;
-				status: string;
-				size?: { slug: string; price_monthly?: number } | string;
-				region?: { slug: string } | string;
-				metrics?: { cpuAvg: number; memoryAvg: number };
-			};
-
-			const size =
-				typeof droplet.size === "object"
-					? droplet.size?.slug
-					: droplet.size;
+		for (const droplet of droplets) {
+			const size = droplet.size?.slug;
 
 			if (!size) {
 				continue;
@@ -100,22 +95,17 @@ export class ConsolidateDropletsAnalyzer implements Analyzer {
 			}
 
 			// Check utilization: CPU < 30% AND RAM < 40%
-			const metrics = droplet.metrics;
+			const metrics = (droplet as any).metrics;
 			if (!metrics || metrics.cpuAvg >= 30 || metrics.memoryAvg >= 40) {
 				continue;
 			}
 
 			const monthlyCost =
-				DROPLET_PRICING[size] ||
-				(typeof droplet.size === "object"
-					? droplet.size.price_monthly
-					: 0) ||
+				this.pricingService.getDropletPrice(size) ||
+				droplet.size?.price_monthly ||
 				0;
 
-			const region =
-				typeof droplet.region === "object"
-					? droplet.region.slug
-					: droplet.region;
+			const region = droplet.region?.slug;
 
 			if (!region) {
 				continue;
@@ -157,7 +147,7 @@ export class ConsolidateDropletsAnalyzer implements Analyzer {
 			return null;
 		}
 
-		const consolidatedCost = DROPLET_PRICING[consolidatedSize] || 0;
+		const consolidatedCost = this.pricingService.getDropletPrice(consolidatedSize);
 		const savings = totalCurrentCost - consolidatedCost;
 
 		// Only recommend if savings > $5/month

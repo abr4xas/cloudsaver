@@ -29,11 +29,5 @@ export interface AnalysisResult {
     recommendations: Recommendation[];
 }
 
-export interface ResourceData {
-    droplets: Array<Record<string, unknown> | unknown>;
-    volumes: Array<Record<string, unknown> | unknown>;
-    snapshots: Array<Record<string, unknown> | unknown>;
-    databases: Array<Record<string, unknown> | unknown>;
-    reserved_ips: Array<Record<string, unknown> | unknown>;
-    load_balancers: Array<Record<string, unknown> | unknown>;
-}
+// Re-export typed ResourceData from analyzer types
+export type { ResourceData } from '@/lib/types/analyzer';

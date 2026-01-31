@@ -8,6 +8,9 @@ import { FutureState } from "@/components/future-state";
 import { HowItWorks } from "@/components/how-it-works";
 import { TokenInputSkeleton } from "@/components/token-input-skeleton";
 import { FAQs } from "@/components/faqs";
+import { CtaSection } from "@/components/cta-section";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { CustomCursor } from "@/components/custom-cursor";
 import {
     generateWebApplicationSchema,
     generateOrganizationSchema,
@@ -62,14 +65,7 @@ const Footer = dynamic(
     }
 );
 
-// Lazy load AboutMe
-const AboutMe = dynamic(
-    () =>
-        import("@/components/about-me").then((mod) => ({ default: mod.AboutMe })),
-    {
-        ssr: true, // Keep SSR for SEO
-    }
-);
+// AboutMe moved to Footer for better CRO flow
 
 // Page metadata
 export const metadata: Metadata = {
@@ -184,9 +180,18 @@ export default function Page() {
                 }}
             />
             <div className="relative min-h-screen grain-texture">
+                {/* Skip to Content for Accessibility */}
+                <a href="#main-content" className="skip-to-content">
+                    Skip to main content
+                </a>
+                {/* Scroll Progress Indicator */}
+                <ScrollProgress />
+                {/* Custom Cursor (Optional - Desktop Only) */}
+                {/* Uncomment the line below to enable custom cursor */}
+                {/* <CustomCursor /> */}
                 <div className="mesh-gradient" />
                 <Navbar />
-                <div className="relative z-10 pt-16">
+                <main id="main-content" className="relative z-10 pt-16">
                     {/* 1. Hero Promise - What we're going to change */}
                     <Hero />
 
@@ -228,24 +233,11 @@ export default function Page() {
                     {/* FAQs Section */}
                     <FAQs />
 
-                    {/* About Me Section */}
-                    <AboutMe />
+                    {/* CTA Section */}
+                    <CtaSection />
 
-                    {/* 5. Clear CTA - What happens next */}
-                    {/* <Suspense
-                        fallback={
-                            <section className="py-32 px-4">
-                                <div className="max-w-xl mx-auto space-y-6">
-                                    <div className="h-12 w-3/4 mx-auto bg-zinc-800 rounded-xl animate-pulse" />
-                                    <div className="h-14 w-full bg-zinc-800 rounded-xl animate-pulse" />
-                                </div>
-                            </section>
-                        }
-                    >
-                        <CtaSection />
-                    </Suspense> */}
                     <Footer />
-                </div>
+                </main>
             </div>
         </>
     );

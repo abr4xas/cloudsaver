@@ -71,7 +71,7 @@ export function FutureState() {
                     </p>
                 </div>
 
-                {/* Benefits Grid */}
+                {/* Benefits Grid - Clean 2x2 Layout */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                     {benefits.map((benefit, index) => {
                         const Icon = benefit.icon;
@@ -79,16 +79,20 @@ export function FutureState() {
                             <Card
                                 key={index}
                                 className={cn(
-                                    "p-6 sm:p-8 border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl",
+                                    "p-6 sm:p-8 border transition-all duration-300 group relative overflow-hidden",
+                                    "hover:-translate-y-1 hover:shadow-xl",
                                     benefit.bgColor,
                                     benefit.borderColor,
                                     "bg-white/2 backdrop-blur-sm"
                                 )}
                             >
-                                <div className="space-y-4">
+                                {/* Subtle hover glow effect */}
+                                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-emerald-500/3 to-transparent pointer-events-none" />
+
+                                <div className="space-y-4 relative z-10">
                                     <div
                                         className={cn(
-                                            "w-12 h-12 rounded-lg flex items-center justify-center border",
+                                            "w-12 h-12 rounded-lg flex items-center justify-center border transition-transform duration-300 group-hover:scale-110",
                                             benefit.bgColor,
                                             benefit.borderColor
                                         )}

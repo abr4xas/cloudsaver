@@ -38,47 +38,55 @@ export function Features() {
                 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 auto-rows-[minmax(240px,auto)] md:auto-rows-[280px]">
                     {/* Item 1: Secure Processing (Wide: 2x1) */}
-                    <Card className="col-span-1 md:col-span-2 row-span-1 bg-[#0A0A0A] border-white/5 p-6 sm:p-8 flex flex-col justify-between group relative overflow-hidden transition-all duration-300 hover:border-white/10 hover:-translate-y-1">
-                        <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
-                            <Code2 className="w-32 h-32 text-white stroke-1" />
+                    <Card className="col-span-1 md:col-span-2 row-span-1 bg-[#0A0A0A] border-white/5 p-6 sm:p-8 flex flex-col justify-between group relative overflow-hidden transition-all duration-500 hover:border-emerald-500/30 hover:-translate-y-2 hover:shadow-2xl hover:shadow-emerald-500/10 card-tilt">
+                        {/* Animated gradient on hover */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-emerald-500/5 to-transparent pointer-events-none" />
+
+                        <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-all duration-500 group-hover:scale-110">
+                            <Code2 className="w-32 h-32 text-emerald-400 stroke-1" />
                         </div>
                         <div className="relative z-10">
-                            <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center mb-6 border border-white/10">
-                                <Shield className="w-5 h-5 text-white" />
+                            <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-6 border border-emerald-500/20 transition-all duration-300 group-hover:scale-110 group-hover:bg-emerald-500/20">
+                                <Shield className="w-5 h-5 text-emerald-400" />
                             </div>
-                            <h3 className="text-xl sm:text-2xl font-medium text-white mb-2">
+                            <h3 className="text-xl sm:text-2xl font-medium text-white mb-2 transition-colors group-hover:text-emerald-400">
                                 We Can't Touch Your Account
                             </h3>
-                            <p className="text-sm sm:text-base text-zinc-400 max-w-md">
+                            <p className="text-sm sm:text-base text-zinc-400 max-w-md leading-relaxed">
                                 Read-only token. We scan, then discard it. We don't store tokens or results. Your data never leaves your control.
                             </p>
                         </div>
                     </Card>
 
                     {/* Item 2: Instant Results (Tall: 1x2) */}
-                    <Card className="col-span-1 md:col-span-1 row-span-1 md:row-span-2 bg-[#0A0A0A] border-white/5 p-6 sm:p-8 flex flex-col relative overflow-hidden group transition-all duration-300 hover:border-white/10 hover:-translate-y-1">
+                    <Card className="col-span-1 md:col-span-1 row-span-1 md:row-span-2 bg-[#0A0A0A] border-white/5 p-6 sm:p-8 flex flex-col relative overflow-hidden group transition-all duration-500 hover:border-indigo-500/30 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 card-tilt">
                         <div className="absolute inset-0 bg-linear-to-b from-transparent to-zinc-950/80 pointer-events-none" />
+                        {/* Animated gradient on hover */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-indigo-500/5 to-transparent pointer-events-none" />
 
                         <div className="relative z-10 flex flex-col h-full">
-                            <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-6 border border-indigo-500/20">
+                            <div className="w-10 h-10 rounded-lg bg-indigo-500/10 flex items-center justify-center mb-6 border border-indigo-500/20 transition-all duration-300 group-hover:scale-110 group-hover:bg-indigo-500/20">
                                 <Zap className="w-5 h-5 text-indigo-400" />
                             </div>
-                            <h3 className="text-xl sm:text-2xl font-medium text-white mb-2">
+                            <h3 className="text-xl sm:text-2xl font-medium text-white mb-2 transition-colors group-hover:text-indigo-400">
                                 Report in Under 30 Seconds
                             </h3>
-                            <p className="text-sm sm:text-base text-zinc-400 mb-6 sm:mb-8">
+                            <p className="text-sm sm:text-base text-zinc-400 mb-6 sm:mb-8 leading-relaxed">
                                 Full report with dollar amounts and copy-paste commands. Each item has a confidence level so you know how solid the recommendation is.
                             </p>
 
-                            {/* Abstract Visualization */}
+                            {/* Interactive Visualization */}
                             <div className="mt-auto relative w-full h-50">
-                                <div className="absolute inset-0 flex items-end justify-between px-4 pb-0 opacity-50">
+                                <div className="absolute inset-0 flex items-end justify-between px-4 pb-0 opacity-60 group-hover:opacity-100 transition-opacity">
                                     {[40, 70, 45, 90, 60, 80, 50, 95].map(
                                         (h, i) => (
                                             <div
                                                 key={i}
-                                                className="w-[10%] bg-indigo-500/30 hover:bg-indigo-500/50 transition-colors rounded-t-sm"
-                                                style={{ height: `${h}%` }}
+                                                className="w-[10%] bg-gradient-to-t from-indigo-500/40 to-indigo-500/20 hover:from-indigo-500/60 hover:to-indigo-500/40 transition-all duration-300 rounded-t-sm group-hover:scale-y-110"
+                                                style={{
+                                                    height: `${h}%`,
+                                                    animationDelay: `${i * 0.1}s`
+                                                }}
                                             />
                                         )
                                     )}

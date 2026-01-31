@@ -4,28 +4,12 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { ArrowRight, ShieldCheck, Zap, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useTypewriter } from "@/hooks/use-typewriter";
 import { useMousePosition } from "@/hooks/use-mouse-position";
 import { useScrollToSection } from "@/hooks/use-scroll-to-section";
 
 export function Hero() {
     const [isVisible, setIsVisible] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
-
-    const phrases = [
-        "Unused Resources",
-        "Zombie Droplets",
-        "Wasted Infrastructure",
-        "Idle Servers",
-        "Over-Provisioned VMs",
-    ];
-
-    const { currentText } = useTypewriter({
-        phrases,
-        typingSpeed: 150,
-        deletingSpeed: 50,
-        pauseDuration: 2000,
-    });
 
     useMousePosition({
         containerRef,
@@ -65,15 +49,18 @@ export function Hero() {
                 />
             </div>
 
-            <div className="max-w-7xl w-full mx-auto text-center relative z-10">
-                <div
-                    className={cn(
-                        "space-y-10 transition-[opacity,transform] duration-1000",
-                        isVisible
-                            ? "opacity-100 translate-y-0"
-                            : "opacity-0 translate-y-10",
-                    )}
-                >
+            <div className="max-w-7xl w-full mx-auto relative z-10">
+                {/* Asymmetric Layout: 60% Content / 40% Visual */}
+                <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+                    {/* Left: Content (60%) */}
+                    <div
+                        className={cn(
+                            "lg:col-span-3 space-y-10 transition-[opacity,transform] duration-1000 text-center lg:text-left",
+                            isVisible
+                                ? "opacity-100 translate-y-0"
+                                : "opacity-0 translate-y-10",
+                        )}
+                    >
                     {/* Badge */}
                     <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 hover:bg-white/10 transition-colors cursor-default">
                         <span className="relative flex h-2 w-2">
@@ -93,25 +80,22 @@ export function Hero() {
                     </div>
 
                     {/* Main Headline */}
-                    <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.1] sm:leading-[0.9]  mx-auto text-balance">
+                    <h1 className="text-4xl sm:text-6xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight leading-[1.1] sm:leading-[0.9] mx-auto lg:mx-0">
                         <span className="block text-white mb-2">
-                            Find Hidden Savings in Your DigitalOcean Account for
+                            Stop Wasting Money on
                         </span>
-                        <span className="block pb-2 min-h-[1.1em]">
-                            <span className="inline text-transparent bg-clip-text bg-linear-to-r from-emerald-400 via-teal-400 to-indigo-500 animate-gradient-x wrap-break-word hyphens-none">
-                                {currentText}
-                            </span>
-                            <span className="animate-pulse text-emerald-400 ml-1 inline align-baseline">
-                                _
+                        <span className="block pb-2">
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-400 to-indigo-500">
+                                Zombie Resources
                             </span>
                         </span>
                     </h1>
 
-                    <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 max-w-4xl mx-auto leading-relaxed font-light px-4">
+                    <p className="text-lg sm:text-xl md:text-2xl text-zinc-400 max-w-4xl mx-auto lg:mx-0 leading-relaxed font-light px-4 lg:px-0">
                         <span className="text-white font-medium">
-                            Paste your DigitalOcean token. Get a free report in under 30 seconds.
+                            Find idle droplets, orphaned volumes, and over-provisioned resources in under 30 seconds.
                         </span>{" "}
-                        We scan droplets, volumes, snapshots, and more—then show you exactly where you can cut costs.{" "}
+                        Get a detailed report showing exactly how much you can save—with copy-paste commands to fix it.{" "}
                         <span className="text-emerald-400 font-medium">
                             Free. No sign-up. No card.
                         </span>
@@ -134,8 +118,23 @@ export function Hero() {
                         </Button>
                     </div>
 
+                    {/* Social Proof */}
+                    <div className="pt-6">
+                        <p className="text-sm sm:text-base text-zinc-400">
+                            Join{" "}
+                            <span className="font-semibold text-emerald-400">
+                                2,500+ teams
+                            </span>{" "}
+                            who've found{" "}
+                            <span className="font-semibold text-emerald-400">
+                                $450K+
+                            </span>{" "}
+                            in savings
+                        </p>
+                    </div>
+
                     {/* Trust Indicators */}
-                    <div className="pt-12 sm:pt-16 flex flex-wrap justify-center gap-x-6 sm:gap-x-12 gap-y-4 sm:gap-y-6 opacity-60 px-4">
+                    <div className="pt-12 sm:pt-16 flex flex-wrap justify-center lg:justify-start gap-x-6 sm:gap-x-12 gap-y-4 sm:gap-y-6 opacity-60 px-4 lg:px-0">
                         <div className="flex items-center gap-2 sm:gap-3">
                             <ShieldCheck
                                 className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400"
@@ -165,6 +164,45 @@ export function Hero() {
                         </div>
                     </div>
                 </div>
+
+                {/* Right: 3D Visual (40%) */}
+                <div className="lg:col-span-2 hidden lg:flex items-center justify-center">
+                    <div className="relative w-full h-96">
+                        {/* Floating savings cards with 3D effect */}
+                        <div className="absolute top-0 right-0 w-64 animate-float-slow">
+                            <div className="p-6 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 backdrop-blur-md shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                                <div className="text-xs text-emerald-400 font-mono mb-2">
+                                    Monthly Savings
+                                </div>
+                                <div className="text-4xl font-bold text-white mb-1">
+                                    $247
+                                </div>
+                                <div className="text-xs text-zinc-400">
+                                    avg. per account
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="absolute bottom-12 left-0 w-56 animate-float-medium" style={{ animationDelay: '0.5s' }}>
+                            <div className="p-5 rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/30 backdrop-blur-md shadow-2xl transform -rotate-6 hover:rotate-0 transition-transform duration-500">
+                                <div className="text-xs text-indigo-400 font-mono mb-2">
+                                    Resources Optimized
+                                </div>
+                                <div className="text-3xl font-bold text-white mb-1">
+                                    27%
+                                </div>
+                                <div className="text-xs text-zinc-400">
+                                    avg. reduction
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Decorative circles with parallax */}
+                        <div className="absolute top-1/4 left-1/2 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl animate-pulse-slow" />
+                        <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
+                    </div>
+                </div>
+            </div>
             </div>
         </section>
     );

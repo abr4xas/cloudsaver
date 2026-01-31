@@ -1,4 +1,5 @@
-import { Github, Disc } from "lucide-react";
+import { Github, Disc, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
     return (
@@ -95,6 +96,51 @@ export function Footer() {
                                 </a>
                             </li>
                         </ul>
+                    </div>
+
+                    {/* Column 5-6: Made by Angel Cruz (Span 2) */}
+                    <div className="col-span-2 space-y-4">
+                        <h4 className="text-sm font-semibold text-white tracking-wide">
+                            Made with ❤️ by
+                        </h4>
+                        <div className="flex items-center gap-4 p-4 rounded-xl bg-white/2 border border-white/5 backdrop-blur-sm hover:bg-white/5 transition-all">
+                            <div className="relative w-12 h-12 rounded-full overflow-hidden border border-indigo-500/30 shrink-0">
+                                <Image
+                                    src="/image/angel-cruz.png"
+                                    alt="Angel Cruz"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <h5 className="text-sm font-semibold text-white">
+                                    Angel Cruz
+                                </h5>
+                                <p className="text-xs text-zinc-500 line-clamp-1">
+                                    Laravel & Next.js Developer
+                                </p>
+                                <div className="flex gap-3 mt-2">
+                                    <a
+                                        href="https://www.angelcruz.dev/?utm_source=cloudsaver&utm_medium=website&utm_campaign=footer"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-xs text-indigo-400 hover:text-indigo-300 transition-colors flex items-center gap-1"
+                                    >
+                                        Blog
+                                        <ExternalLink className="w-3 h-3" />
+                                    </a>
+                                    <a
+                                        href="https://github.com/abr4xas"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-xs text-zinc-400 hover:text-zinc-300 transition-colors flex items-center gap-1"
+                                    >
+                                        GitHub
+                                        <Github className="w-3 h-3" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

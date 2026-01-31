@@ -13,11 +13,15 @@ const nextConfig = {
     },
     // Optimize package imports to reduce bundle size
     experimental: {
-        optimizePackageImports: ["lucide-react", "recharts"],
+        optimizePackageImports: ["lucide-react", "recharts", "@radix-ui/react-accordion", "@radix-ui/react-dialog"],
         after: true,
     },
     // Enable compression
     compress: true,
+    // Font optimization
+    optimizeFonts: true,
+    // Reduce build output
+    productionBrowserSourceMaps: false,
     // Security headers
     async headers() {
         return [

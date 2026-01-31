@@ -7,12 +7,11 @@ import Link from "next/link";
 import { Menu, X, Zap } from "lucide-react";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
 import { useScrollToSection } from "@/hooks/use-scroll-to-section";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navLinks = [
-    { label: "Current State", href: "#current-state" },
-    { label: "Future State", href: "#future-state" },
     { label: "How It Works", href: "#how-it-works" },
-    { label: "Features", href: "#features" },
+    { label: "FAQ", href: "#faqs" },
 ];
 
 export function Navbar() {
@@ -64,8 +63,9 @@ export function Navbar() {
                         ))}
                     </div>
 
-                    {/* CTA Button */}
-                    <div className="hidden md:flex items-center gap-4">
+                    {/* CTA Button & Theme Toggle */}
+                    <div className="hidden md:flex items-center gap-3">
+                        <ThemeToggle />
                         <Button
                             onClick={() => scrollToSection("#token-input")}
                             className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-full px-6"
@@ -109,12 +109,15 @@ export function Navbar() {
                                 {link.label}
                             </button>
                         ))}
-                        <Button
-                            onClick={() => scrollToSection("#token-input")}
-                            className="mt-2 bg-indigo-600 hover:bg-indigo-500 text-white"
-                        >
-                            See My Savings
-                        </Button>
+                        <div className="mt-2 flex items-center gap-2">
+                            <ThemeToggle />
+                            <Button
+                                onClick={() => scrollToSection("#token-input")}
+                                className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white"
+                            >
+                                See My Savings
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
